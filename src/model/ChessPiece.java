@@ -6,13 +6,24 @@ public class ChessPiece {
     private PlayerColor owner;
 
     // Elephant? Cat? Dog? ...
-    private String name;
+    private PieceType type;
+    public enum PieceType{
+        None,
+        Rat,
+        Cat,
+        Dog,
+        Wolf,
+        Leopard,
+        Tiger,
+        Lion,
+        Elephant
+    }
     private int rank;
 
-    public ChessPiece(PlayerColor owner, String name, int rank) {
+    public ChessPiece(PlayerColor owner, PieceType type) {
         this.owner = owner;
-        this.name = name;
-        this.rank = rank;
+        this.type = type;
+        this.rank = (int) this.type.ordinal();
     }
 
     public boolean canCapture(ChessPiece target) {
@@ -20,8 +31,8 @@ public class ChessPiece {
         return false;
     }
 
-    public String getName() {
-        return name;
+    public PieceType getType() {
+        return type;
     }
 
     public PlayerColor getOwner() {

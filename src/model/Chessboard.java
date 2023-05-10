@@ -24,8 +24,22 @@ public class Chessboard {
     }
 
     private void initPieces() {
-        grid[0][0].setPiece(new ChessPiece(PlayerColor.BLUE, "Elephant",8));
-        grid[8][6].setPiece(new ChessPiece(PlayerColor.RED, "Elephant",8));
+        grid[0][0].setPiece(new ChessPiece(PlayerColor.RED, ChessPiece.PieceType.Lion));
+        grid[2][0].setPiece(new ChessPiece(PlayerColor.RED, ChessPiece.PieceType.Rat));
+        grid[1][1].setPiece(new ChessPiece(PlayerColor.RED, ChessPiece.PieceType.Dog));
+        grid[2][2].setPiece(new ChessPiece(PlayerColor.RED, ChessPiece.PieceType.Leopard));
+        grid[2][4].setPiece(new ChessPiece(PlayerColor.RED, ChessPiece.PieceType.Wolf));
+        grid[1][5].setPiece(new ChessPiece(PlayerColor.RED, ChessPiece.PieceType.Cat));
+        grid[0][6].setPiece(new ChessPiece(PlayerColor.RED, ChessPiece.PieceType.Tiger));
+        grid[2][6].setPiece(new ChessPiece(PlayerColor.RED, ChessPiece.PieceType.Elephant));
+        grid[6][0].setPiece(new ChessPiece(PlayerColor.BLUE, ChessPiece.PieceType.Elephant));
+        grid[8][0].setPiece(new ChessPiece(PlayerColor.BLUE, ChessPiece.PieceType.Tiger));
+        grid[7][1].setPiece(new ChessPiece(PlayerColor.BLUE, ChessPiece.PieceType.Cat));
+        grid[6][2].setPiece(new ChessPiece(PlayerColor.BLUE, ChessPiece.PieceType.Wolf));
+        grid[6][4].setPiece(new ChessPiece(PlayerColor.BLUE, ChessPiece.PieceType.Leopard));
+        grid[7][5].setPiece(new ChessPiece(PlayerColor.BLUE, ChessPiece.PieceType.Dog));
+        grid[6][6].setPiece(new ChessPiece(PlayerColor.BLUE, ChessPiece.PieceType.Rat));
+        grid[8][6].setPiece(new ChessPiece(PlayerColor.BLUE, ChessPiece.PieceType.Lion));
     }
 
     private ChessPiece getChessPieceAt(ChessboardPoint point) {
