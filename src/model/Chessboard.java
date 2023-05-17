@@ -24,6 +24,7 @@ public class Chessboard {
     }
 
     private void initPieces() {
+        // initChess
         grid[0][0].setPiece(new ChessPiece(PlayerColor.RED, ChessPiece.PieceType.Lion));
         grid[2][0].setPiece(new ChessPiece(PlayerColor.RED, ChessPiece.PieceType.Rat));
         grid[1][1].setPiece(new ChessPiece(PlayerColor.RED, ChessPiece.PieceType.Dog));
@@ -40,6 +41,35 @@ public class Chessboard {
         grid[7][5].setPiece(new ChessPiece(PlayerColor.BLUE, ChessPiece.PieceType.Dog));
         grid[6][6].setPiece(new ChessPiece(PlayerColor.BLUE, ChessPiece.PieceType.Rat));
         grid[8][6].setPiece(new ChessPiece(PlayerColor.BLUE, ChessPiece.PieceType.Lion));
+
+        // River
+        grid[3][1].setCellType(CellType.River);
+        grid[3][2].setCellType(CellType.River);
+        grid[4][1].setCellType(CellType.River);
+        grid[4][2].setCellType(CellType.River);
+        grid[5][1].setCellType(CellType.River);
+        grid[5][2].setCellType(CellType.River);
+
+        grid[3][4].setCellType(CellType.River);
+        grid[3][5].setCellType(CellType.River);
+        grid[4][4].setCellType(CellType.River);
+        grid[4][5].setCellType(CellType.River);
+        grid[5][4].setCellType(CellType.River);
+        grid[5][5].setCellType(CellType.River);
+
+        // Nest
+        grid[0][3].setCellType(CellType.Nest);
+        grid[8][3].setCellType(CellType.Nest);
+
+        // Trap
+        grid[0][2].setCellType(CellType.Trap);
+        grid[0][4].setCellType(CellType.Trap);
+        grid[1][3].setCellType(CellType.Trap);
+
+        grid[8][2].setCellType(CellType.Trap);
+        grid[8][4].setCellType(CellType.Trap);
+        grid[7][3].setCellType(CellType.Trap);
+
     }
 
     private ChessPiece getChessPieceAt(ChessboardPoint point) {
@@ -97,9 +127,15 @@ public class Chessboard {
 
     public boolean isValidCapture(ChessboardPoint src, ChessboardPoint dest) {
         // TODO:Fix this method
-        if (getChessPieceOwner(src) == getChessPieceOwner(dest) || getChessPieceAt(src) == null || getChessPieceAt(dest) == null) {
+        if (getChessPieceAt(src) == null || getChessPieceAt(dest) == null) {
             return false;
         }
+        if(getChessPieceOwner(src) == getChessPieceOwner(dest) || getGridAt(src).getCellType() == CellType.River){
+            return false;
+        }
+
+        if (getGridAt(dest).getCellType() == CellType.River) return true;
+        // distant equal 1 and can Capture
         return calculateDistance(src, dest) == 1 && getChessPieceAt(src).canCapture(getChessPieceAt(dest));
     }
 }
