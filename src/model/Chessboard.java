@@ -151,7 +151,7 @@ public class Chessboard {
         // cannot eat teammate
         if(getChessPieceOwner(src) == getChessPieceOwner(dest)) return false;
         // cannot eat other if you stay in river
-        if (getGridAt(src).getCellType() == CellType.River) return false;
+        if (getGridAt(src).getCellType() == CellType.River && getGridAt(dest).getCellType() == CellType.Land) return false;
         // only rat can enter river
         if (getGridAt(dest).getCellType() == CellType.River && getChessPieceAt(src).getType() != ChessPiece.PieceType.Rat) return false;
         // everyone can capture the animal in trap

@@ -8,7 +8,7 @@ public class Cell implements Serializable {
     // the position for chess
     private ChessPiece piece;
 
-    private CellType cellType = CellType.Floor; // We will update it later
+    private CellType cellType = CellType.Land; // We will update it later
 
     public ChessPiece getPiece() {
         return piece;

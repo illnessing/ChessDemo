@@ -2,7 +2,7 @@ package model;
 
 
 public enum CellType{
-    Floor,
+    Land,
     River,
     Trap,
     BlueDen,
