@@ -5,7 +5,7 @@ package model;
  * The Chessboard has 9*7 cells, and each cell has a position for chess
  */
 public class Chessboard {
-    private Cell[][] grid;
+    private final Cell[][] grid;
 
     public Chessboard() {
         this.grid =
@@ -72,10 +72,12 @@ public class Chessboard {
     }
 
     public void captureChessPiece(ChessboardPoint src, ChessboardPoint dest) {
-        if (isValidCapture(src, dest)) {
+        if (!isValidCapture(src, dest)) {
             throw new IllegalArgumentException("Illegal chess capture!");
         }
-        // TODO: Finish the method.
+        System.out.println(src + "capture" + dest);
+        removeChessPiece(dest);
+        setChessPiece(dest, removeChessPiece(src));
     }
 
     public Cell[][] getGrid() {
@@ -95,6 +97,9 @@ public class Chessboard {
 
     public boolean isValidCapture(ChessboardPoint src, ChessboardPoint dest) {
         // TODO:Fix this method
-        return false;
+        if (getChessPieceAt(src) == null || getChessPieceAt(dest) == null) {
+            return false;
+        }
+        return getChessPieceAt(src).canCapture(getChessPieceAt(dest));
     }
 }

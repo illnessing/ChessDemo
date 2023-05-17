@@ -3,10 +3,10 @@ package model;
 
 public class ChessPiece {
     // the owner of the chess
-    private PlayerColor owner;
+    private final PlayerColor owner;
 
     // Elephant? Cat? Dog? ...
-    private PieceType type;
+    private final PieceType type;
     public enum PieceType{
         None,
         Rat,
@@ -27,8 +27,10 @@ public class ChessPiece {
     }
 
     public boolean canCapture(ChessPiece target) {
-        // TODO: Finish this method!
-        return false;
+        // But there is a special case that eleplant cannot capture the rat while the rat can capture the eleplant
+        if (this.getType() == PieceType.Rat && target.getType() == PieceType.Elephant) return true;
+        if (this.getType() == PieceType.Elephant && target.getType() == PieceType.Rat) return false;
+        return this.getType().ordinal() >= target.getType().ordinal();
     }
 
     public PieceType getType() {
