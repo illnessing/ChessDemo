@@ -10,25 +10,12 @@ import java.awt.*;
  * This is the equivalent of the ChessPiece class,
  * but this class only cares how to draw Chess on ChessboardComponent
  */
-public class WolfChessComponent extends JComponent {
-	private PlayerColor owner;
-
-	private boolean selected;
-
+public class WolfChessComponent extends ChessComponent {
 	public WolfChessComponent(PlayerColor owner, int size) {
-		this.owner = owner;
-		this.selected = false;
+		super(owner, size);
 		setSize(size/2, size/2);
 		setLocation(0,0);
 		setVisible(true);
-	}
-
-	public boolean isSelected() {
-		return selected;
-	}
-
-	public void setSelected(boolean selected) {
-		this.selected = selected;
 	}
 
 
