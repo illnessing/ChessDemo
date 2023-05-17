@@ -126,6 +126,8 @@ public class Chessboard {
         if (getChessPieceAt(src) == null || getChessPieceAt(dest) != null) {
             return false;
         }
+        //check only rat enter river
+        if(getGridAt(dest).getCellType() == CellType.River) return getChessPieceAt(src).getType() == ChessPiece.PieceType.Rat;
         // check if you are trying to enter a den
         if (getGridAt(dest).getCellType() == CellType.BlueDen) {
             return getChessPieceOwner(src) != PlayerColor.BLUE;
@@ -139,13 +141,20 @@ public class Chessboard {
 
     public boolean isValidCapture(ChessboardPoint src, ChessboardPoint dest) {
         // TODO:Fix this method
+        // capture need there is two chessPiece
         if (getChessPieceAt(src) == null || getChessPieceAt(dest) == null) {
             return false;
         }
-        if(getChessPieceOwner(src) == getChessPieceOwner(dest) || getGridAt(src).getCellType() == CellType.River){
-            return false;
-        }
+        // distance
+        if (calculateDistance(src, dest) != 1) return false;
 
+        // cannot eat teammate
+        if(getChessPieceOwner(src) == getChessPieceOwner(dest)) return false;
+        // cannot eat other if you stay in river
+        if (getGridAt(src).getCellType() == CellType.River) return false;
+        // only rat can enter river
+        if (getGridAt(dest).getCellType() == CellType.River && getChessPieceAt(src).getType() != ChessPiece.PieceType.Rat) return false;
+        // everyone can capture the animal in trap
         if (getGridAt(dest).getCellType() == CellType.Trap) return true;
         // distant equal 1 and can Capture
         return calculateDistance(src, dest) == 1 && getChessPieceAt(src).canCapture(getChessPieceAt(dest));
