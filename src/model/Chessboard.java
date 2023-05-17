@@ -100,6 +100,6 @@ public class Chessboard {
         if (getChessPieceAt(src) == null || getChessPieceAt(dest) == null) {
             return false;
         }
-        return getChessPieceAt(src).canCapture(getChessPieceAt(dest));
+        return calculateDistance(src, dest) == 1 && getChessPieceAt(src).canCapture(getChessPieceAt(dest));
     }
 }
