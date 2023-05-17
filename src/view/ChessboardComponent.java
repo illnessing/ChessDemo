@@ -70,6 +70,7 @@ public class ChessboardComponent extends JComponent {
 
     public void initiateGridComponents() {
 
+
         riverCell.add(new ChessboardPoint(3,1));
         riverCell.add(new ChessboardPoint(3,2));
         riverCell.add(new ChessboardPoint(4,1));
