@@ -112,4 +112,12 @@ public class GameController implements GameListener {
         }
         throw new IllegalArgumentException("I don't know who is the winner. May the winner is audience!");
     }
+
+    public boolean isValidMove(ChessboardPoint src, ChessboardPoint dest){
+        return model.isValidMove(src,dest);
+    }
+
+    public boolean isValidCapture(ChessboardPoint src, ChessboardPoint dest){
+        return model.isValidCapture(src,dest);
+    }
 }

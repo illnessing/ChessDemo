@@ -120,12 +120,27 @@ public class Chessboard {
     }
 
     public boolean isValidMove(ChessboardPoint src, ChessboardPoint dest) {
-        // check distance
-        if (calculateDistance(src, dest) != 1) return false;
-        // check the path is clear
+        // check dest and src
         if (getChessPieceAt(src) == null || getChessPieceAt(dest) != null) {
             return false;
         }
+
+        // Tiger, Lion JUMP
+        if (
+                calculateDistance(src, dest) != 1 && (
+                getChessPieceAt(src).getType() == ChessPiece.PieceType.Lion ||
+                getChessPieceAt(src).getType() == ChessPiece.PieceType.Tiger)
+        ) {
+            // not enter river
+            if (getGridAt(dest).getCellType() == CellType.River) return false;
+//            if (src.getRow() == dest.getRow()){
+//                for (int j = )
+//            }
+        }
+
+        // check distance
+        if (calculateDistance(src, dest) != 1) return false;
+
         //check only rat enter river
         if(getGridAt(dest).getCellType() == CellType.River) return getChessPieceAt(src).getType() == ChessPiece.PieceType.Rat;
         // check if you are trying to enter a den
