@@ -125,7 +125,7 @@ public class Chessboard {
             return false;
         }
 
-        // Tiger, Lion JUMP
+        //TODO: Tiger, Lion JUMP
         if (
                 calculateDistance(src, dest) != 1 && (
                 getChessPieceAt(src).getType() == ChessPiece.PieceType.Lion ||
@@ -133,9 +133,21 @@ public class Chessboard {
         ) {
             // not enter river
             if (getGridAt(dest).getCellType() == CellType.River) return false;
-//            if (src.getRow() == dest.getRow()){
-//                for (int j = )
-//            }
+            // check path
+            if (src.getRow() == dest.getRow()){
+                for (int j = Math.min(src.getCol(), dest.getCol()) + 1; j < Math.max(src.getCol(), dest.getCol()); j++){
+                    if (getGrid()[src.getRow()][j].getCellType() != CellType.River) return false;
+                    if (getGrid()[src.getRow()][j].getPiece() != null) return false;
+                }
+                return true;
+            }
+            if (src.getCol() == dest.getCol()){
+                for (int i = Math.min(src.getRow(), dest.getRow()) + 1; i < Math.max(src.getRow(), dest.getRow()); i++){
+                    if (getGrid()[i][src.getCol()].getCellType() != CellType.River) return false;
+                    if (getGrid()[i][src.getCol()].getPiece() != null) return false;
+                }
+                return true;
+            }
         }
 
         // check distance
