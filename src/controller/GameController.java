@@ -2,10 +2,7 @@ package controller;
 
 
 import listener.GameListener;
-import model.Constant;
-import model.PlayerColor;
-import model.Chessboard;
-import model.ChessboardPoint;
+import model.*;
 import view.CellComponent;
 import view.ChessComponent;
 import view.ChessboardComponent;
@@ -52,7 +49,12 @@ public class GameController implements GameListener {
     }
 
     private boolean win() {
-        // TODO: Check the board if there is a winner
+        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                if (model.getGrid()[i][j].getCellType() == CellType.BlueDen && model.getGrid()[i][j].getPiece() != null) return true;
+                if (model.getGrid()[i][j].getCellType() == CellType.RedDen && model.getGrid()[i][j].getPiece() != null) return true;
+            }
+        }
         return false;
     }
 
@@ -60,6 +62,7 @@ public class GameController implements GameListener {
     // click an empty cell
     @Override
     public void onPlayerClickCell(ChessboardPoint point, CellComponent component) {
+        if (win()) return;
         if (selectedPoint != null && model.isValidMove(selectedPoint, point)) {
             model.moveChessPiece(selectedPoint, point);
             view.setChessComponentAtGrid(point, view.removeChessComponentAtGrid(selectedPoint));
@@ -73,6 +76,7 @@ public class GameController implements GameListener {
     // click a cell with a chess
     @Override
     public void onPlayerClickChessPiece(ChessboardPoint point, ChessComponent component) {
+        if (win()) return;
         if (selectedPoint == null) {
             if (model.getChessPieceOwner(point).equals(currentPlayer)) {
                 selectedPoint = point;
@@ -92,6 +96,20 @@ public class GameController implements GameListener {
             swapColor();
             view.repaint();
         }
-        // TODO: Implement capture function
+    }
+
+    /// <summary>
+    /// check if someone win the game
+    /// </summary>
+    /// <returns>0:no one win, 1:Player1 win, 2:Player2 win</returns>
+    public int checkWin(){
+        if (!win()) return 0;
+        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                if (model.getGrid()[i][j].getCellType() == CellType.BlueDen && model.getGrid()[i][j].getPiece() != null) return 1;
+                if (model.getGrid()[i][j].getCellType() == CellType.RedDen && model.getGrid()[i][j].getPiece() != null) return 2;
+            }
+        }
+        throw new IllegalArgumentException("I don't know who is the winner. May the winner is audience!");
     }
 }

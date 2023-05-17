@@ -13,6 +13,7 @@ public class Chessboard {
 
         initGrid();
         initPieces();
+        initSpecialCell();
     }
 
     private void initGrid() {
@@ -41,8 +42,10 @@ public class Chessboard {
         grid[7][5].setPiece(new ChessPiece(PlayerColor.BLUE, ChessPiece.PieceType.Dog));
         grid[6][6].setPiece(new ChessPiece(PlayerColor.BLUE, ChessPiece.PieceType.Rat));
         grid[8][6].setPiece(new ChessPiece(PlayerColor.BLUE, ChessPiece.PieceType.Lion));
+    }
 
-        // River
+    private void initSpecialCell() {
+        // Rivers
         grid[3][1].setCellType(CellType.River);
         grid[3][2].setCellType(CellType.River);
         grid[4][1].setCellType(CellType.River);
@@ -57,11 +60,11 @@ public class Chessboard {
         grid[5][4].setCellType(CellType.River);
         grid[5][5].setCellType(CellType.River);
 
-        // Nest
+        // Dens
         grid[0][3].setCellType(CellType.RedDen);
         grid[8][3].setCellType(CellType.BlueDen);
 
-        // Trap
+        // Traps
         grid[0][2].setCellType(CellType.Trap);
         grid[0][4].setCellType(CellType.Trap);
         grid[1][3].setCellType(CellType.Trap);
@@ -69,7 +72,6 @@ public class Chessboard {
         grid[8][2].setCellType(CellType.Trap);
         grid[8][4].setCellType(CellType.Trap);
         grid[7][3].setCellType(CellType.Trap);
-
     }
 
     private ChessPiece getChessPieceAt(ChessboardPoint point) {
@@ -118,10 +120,19 @@ public class Chessboard {
     }
 
     public boolean isValidMove(ChessboardPoint src, ChessboardPoint dest) {
+        // check distance
+        if (calculateDistance(src, dest) != 1) return false;
+        // check the path is clear
         if (getChessPieceAt(src) == null || getChessPieceAt(dest) != null) {
             return false;
         }
-        //if (getGridAt(dest).getCellType() == CellType.BlueDen || getGridAt(dest).getCellType() == CellType.BlueDen)
+        // check if you are trying to enter a den
+        if (getGridAt(dest).getCellType() == CellType.BlueDen) {
+            return getChessPieceOwner(src) != PlayerColor.BLUE;
+        }
+        if (getGridAt(dest).getCellType() == CellType.RedDen) {
+            return getChessPieceOwner(src) != PlayerColor.RED;
+        }
         return calculateDistance(src, dest) == 1;
     }
 
