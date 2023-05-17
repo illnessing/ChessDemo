@@ -173,7 +173,7 @@ public class ChessboardComponent extends JComponent {
     protected void processMouseEvent(MouseEvent e) {
         if (e.getID() == MouseEvent.MOUSE_PRESSED) {
             JComponent clickedComponent = (JComponent) getComponentAt(e.getX(), e.getY());
-            showWin(gameController.checkWin());
+
             if (clickedComponent.getComponentCount() == 0) {
                 System.out.print("None chess here and ");
                 gameController.onPlayerClickCell(getChessboardPoint(e.getPoint()), (CellComponent) clickedComponent);
@@ -193,6 +193,7 @@ public class ChessboardComponent extends JComponent {
 //                    }
 //                }
             }
+            showWin(gameController.checkWin());
         }
     }
 }
