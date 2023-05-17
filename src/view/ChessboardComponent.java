@@ -22,6 +22,9 @@ public class ChessboardComponent extends JComponent {
     private final CellComponent[][] gridComponents = new CellComponent[CHESSBOARD_ROW_SIZE.getNum()][CHESSBOARD_COL_SIZE.getNum()];
     private final int CHESS_SIZE;
     private final Set<ChessboardPoint> riverCell = new HashSet<>();
+    private final Set<ChessboardPoint> trapCell = new HashSet<>();
+    private final Set<ChessboardPoint> nestCell = new HashSet<>();
+
 
     private GameController gameController;
 
@@ -61,11 +64,9 @@ public class ChessboardComponent extends JComponent {
                         case Lion -> gridComponents[i][j].add(new LionChessComponent(chessPiece.getOwner(),CHESS_SIZE));
                         case Elephant -> gridComponents[i][j].add(new ElephantChessComponent(chessPiece.getOwner(),CHESS_SIZE));
                     }
-
                 }
             }
         }
-
     }
 
     public void initiateGridComponents() {
@@ -85,6 +86,17 @@ public class ChessboardComponent extends JComponent {
         riverCell.add(new ChessboardPoint(5,4));
         riverCell.add(new ChessboardPoint(5,5));
 
+        trapCell.add(new ChessboardPoint(0,2));
+        trapCell.add(new ChessboardPoint(0,4));
+        trapCell.add(new ChessboardPoint(1,3));
+        nestCell.add(new ChessboardPoint(0,3));
+
+        trapCell.add(new ChessboardPoint(8,2));
+        trapCell.add(new ChessboardPoint(8,4));
+        trapCell.add(new ChessboardPoint(7,3));
+        nestCell.add(new ChessboardPoint(8,3));
+
+
         for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
             for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
                 ChessboardPoint temp = new ChessboardPoint(i, j);
@@ -92,7 +104,19 @@ public class ChessboardComponent extends JComponent {
                 if (riverCell.contains(temp)) {
                     cell = new CellComponent(Color.CYAN, calculatePoint(i, j), CHESS_SIZE);
                     this.add(cell);
-                } else {
+                    //cell.paintComponent();
+                }
+                else if (trapCell.contains(temp)) {
+                    cell = new CellComponent(Color.WHITE, calculatePoint(i, j), CHESS_SIZE);
+                    this.add(cell);
+                    //cell.paintComponent();
+                }
+                else if (nestCell.contains(temp)) {
+                    cell = new CellComponent(Color.YELLOW, calculatePoint(i, j), CHESS_SIZE);
+                    this.add(cell);
+                    //cell.paintComponent();
+                }
+                else {
                     cell = new CellComponent(Color.LIGHT_GRAY, calculatePoint(i, j), CHESS_SIZE);
                     this.add(cell);
                 }
