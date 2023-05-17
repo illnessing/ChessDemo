@@ -8,6 +8,7 @@ public class Cell implements Serializable {
     // the position for chess
     private ChessPiece piece;
 
+    private CellType cellType;
 
     public ChessPiece getPiece() {
         return piece;
@@ -21,3 +22,4 @@ public class Cell implements Serializable {
         this.piece = null;
     }
 }
+
