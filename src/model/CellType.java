@@ -5,5 +5,6 @@ public enum CellType{
     Floor,
     River,
     Trap,
-    Nest
+    BlueDen,
+    RedDen,
 }

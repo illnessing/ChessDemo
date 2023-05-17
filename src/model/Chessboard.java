@@ -58,8 +58,8 @@ public class Chessboard {
         grid[5][5].setCellType(CellType.River);
 
         // Nest
-        grid[0][3].setCellType(CellType.Nest);
-        grid[8][3].setCellType(CellType.Nest);
+        grid[0][3].setCellType(CellType.RedDen);
+        grid[8][3].setCellType(CellType.BlueDen);
 
         // Trap
         grid[0][2].setCellType(CellType.Trap);
@@ -121,6 +121,7 @@ public class Chessboard {
         if (getChessPieceAt(src) == null || getChessPieceAt(dest) != null) {
             return false;
         }
+        //if (getGridAt(dest).getCellType() == CellType.BlueDen || getGridAt(dest).getCellType() == CellType.BlueDen)
         return calculateDistance(src, dest) == 1;
     }
 
@@ -134,7 +135,7 @@ public class Chessboard {
             return false;
         }
 
-        if (getGridAt(dest).getCellType() == CellType.River) return true;
+        if (getGridAt(dest).getCellType() == CellType.Trap) return true;
         // distant equal 1 and can Capture
         return calculateDistance(src, dest) == 1 && getChessPieceAt(src).canCapture(getChessPieceAt(dest));
     }
