@@ -24,10 +24,13 @@ public class GameController implements GameListener {
     // Record whether there is a selected piece before
     private ChessboardPoint selectedPoint;
 
+    private int winID;
+
     public GameController(ChessboardComponent view, Chessboard model) {
         this.view = view;
         this.model = model;
         this.currentPlayer = PlayerColor.BLUE;
+        this.winID = 0;
 
         view.registerController(this);
         initialize();
@@ -49,10 +52,65 @@ public class GameController implements GameListener {
     }
 
     private boolean win() {
+        // TODO: If someone cannot move, they lose
+        if (currentPlayer == PlayerColor.BLUE){
+            boolean flag = false;
+            // try to move every Piece
+            for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+                for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                    if (model.getGrid()[i][j].getPiece() != null && model.getGrid()[i][j].getPiece().getOwner() == PlayerColor.BLUE){
+                        for (int k = 0; k < Constant.CHESSBOARD_ROW_SIZE.getNum(); k++) {
+                            for (int l = 0; l < Constant.CHESSBOARD_COL_SIZE.getNum(); l++) {
+                                if (isValidMove(new ChessboardPoint(i,j), new ChessboardPoint(k,l)) || isValidCapture(new ChessboardPoint(i,j), new ChessboardPoint(k,l))) flag = true;
+                                if (flag) break;
+                            }
+                            if (flag) break;
+                        }
+                        if (flag) break;
+                    }
+                }
+                if (flag) break;
+            }
+            if (!flag) {
+                winID = 2;
+                return true;
+            }
+        }
+        if (currentPlayer == PlayerColor.RED){
+            boolean flag = false;
+            // try to move every Piece
+            for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+                for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                    if (model.getGrid()[i][j].getPiece() != null && model.getGrid()[i][j].getPiece().getOwner() == PlayerColor.BLUE){
+                        for (int k = 0; k < Constant.CHESSBOARD_ROW_SIZE.getNum(); k++) {
+                            for (int l = 0; l < Constant.CHESSBOARD_COL_SIZE.getNum(); l++) {
+                                if (isValidMove(new ChessboardPoint(i,j), new ChessboardPoint(k,l)) || isValidCapture(new ChessboardPoint(i,j), new ChessboardPoint(k,l))) flag = true;
+                                if (flag) break;
+                            }
+                            if (flag) break;
+                        }
+                        if (flag) break;
+                    }
+                }
+                if (flag) break;
+            }
+            if (!flag) {
+                winID = 1;
+                return true;
+            }
+        }
+
+
         for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
             for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
-                if (model.getGrid()[i][j].getCellType() == CellType.BlueDen && model.getGrid()[i][j].getPiece() != null) return true;
-                if (model.getGrid()[i][j].getCellType() == CellType.RedDen && model.getGrid()[i][j].getPiece() != null) return true;
+                if (model.getGrid()[i][j].getCellType() == CellType.BlueDen && model.getGrid()[i][j].getPiece() != null) {
+                    winID = 2;
+                    return true;
+                }
+                if (model.getGrid()[i][j].getCellType() == CellType.RedDen && model.getGrid()[i][j].getPiece() != null) {
+                    winID = 1;
+                    return true;
+                }
             }
         }
         return false;
@@ -103,14 +161,8 @@ public class GameController implements GameListener {
     /// </summary>
     /// <returns>0:no one win, 1:Player1 win, 2:Player2 win</returns>
     public int checkWin(){
-        if (!win()) return 0;
-        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
-            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
-                if (model.getGrid()[i][j].getCellType() == CellType.BlueDen && model.getGrid()[i][j].getPiece() != null) return 1;
-                if (model.getGrid()[i][j].getCellType() == CellType.RedDen && model.getGrid()[i][j].getPiece() != null) return 2;
-            }
-        }
-        throw new IllegalArgumentException("I don't know who is the winner. May the winner is audience!");
+        return winID;
+        //throw new IllegalArgumentException("I don't know who is the winner. May the winner is audience!");
     }
 
     public boolean isValidMove(ChessboardPoint src, ChessboardPoint dest){
