@@ -104,7 +104,7 @@ public class ChessboardComponent extends JComponent {
                 if (riverCell.contains(temp)) {
                     cell = new CellComponent(Color.CYAN, calculatePoint(i, j), CHESS_SIZE);
                     this.add(cell);
-                    //cell.paintComponent();
+
                 }
                 else if (trapCell.contains(temp)) {
                     cell = new CellComponent(Color.WHITE, calculatePoint(i, j), CHESS_SIZE);
@@ -160,17 +160,38 @@ public class ChessboardComponent extends JComponent {
         super.paintComponent(g);
         ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     }
+    public void showWin(int x){
+        if(x==1){
+            JOptionPane.showMessageDialog(this, "Player A Wins!");
+        }
+        else if (x==2) {
+            JOptionPane.showMessageDialog(this, "Player B Wins!");
+        }
+    }
 
     @Override
     protected void processMouseEvent(MouseEvent e) {
         if (e.getID() == MouseEvent.MOUSE_PRESSED) {
             JComponent clickedComponent = (JComponent) getComponentAt(e.getX(), e.getY());
+            showWin(gameController.checkWin());
             if (clickedComponent.getComponentCount() == 0) {
                 System.out.print("None chess here and ");
                 gameController.onPlayerClickCell(getChessboardPoint(e.getPoint()), (CellComponent) clickedComponent);
-            } else {
+            }
+            else {
                 System.out.print("One chess here and ");
                 gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (ChessComponent) clickedComponent.getComponents()[0]);
+//                for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
+//                    for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
+//                        ChessboardPoint temp = new ChessboardPoint(i, j);
+//                        CellComponent cell;
+//                        if () {
+//                            cell = new CellComponent(Color.CYAN, calculatePoint(i, j), CHESS_SIZE);
+//                            this.add(cell);
+//
+//                        }
+//                    }
+                }
             }
         }
     }
