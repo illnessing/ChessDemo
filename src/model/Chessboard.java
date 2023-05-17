@@ -97,7 +97,7 @@ public class Chessboard {
 
     public boolean isValidCapture(ChessboardPoint src, ChessboardPoint dest) {
         // TODO:Fix this method
-        if (getChessPieceAt(src) == null || getChessPieceAt(dest) == null) {
+        if (getChessPieceOwner(src) == getChessPieceOwner(dest) || getChessPieceAt(src) == null || getChessPieceAt(dest) == null) {
             return false;
         }
         return calculateDistance(src, dest) == 1 && getChessPieceAt(src).canCapture(getChessPieceAt(dest));
