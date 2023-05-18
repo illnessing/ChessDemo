@@ -3,8 +3,11 @@ package view;
 
 import model.PlayerColor;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * This is the equivalent of the ChessPiece class,
@@ -28,10 +31,30 @@ public class ElephantChessComponent extends ChessComponent {
         Font font = new Font("楷体", Font.PLAIN, getWidth() / 2);
         g2.setFont(font);
         g2.setColor(owner.getColor());
-        g2.drawString("象", getWidth() / 4, getHeight() * 5 / 8); // FIXME: Use library to find the correct offset.
+//        g2.drawString("象", getWidth() / 4, getHeight() * 5 / 8); // FIXME: Use library to find the correct offset.
+
         if (isSelected()) { // Highlights the model if selected.
             g.setColor(Color.RED);
             g.drawOval(0, 0, getWidth() , getHeight());
+        }
+        //画图片
+        if(owner.getColor()==Color.blue) {
+            Image image = null;
+            try {
+                image = ImageIO.read(new File("E:/files/2023spring/Java/ChessDemo/resource/Elephant-blue.png"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+        }
+        else{
+            Image image = null;
+            try {
+                image = ImageIO.read(new File("E:/files/2023spring/Java/ChessDemo/resource/Elephant-red.png"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
         }
     }
 }
