@@ -32,6 +32,8 @@ public class ChessGameFrame extends JFrame {
         addChessboard();
         addLabel();
         addHelloButton();
+        addRestartButton();
+        addLoadButton();
     }
 
     public ChessboardComponent getChessboardComponent() {
@@ -76,20 +78,30 @@ public class ChessGameFrame extends JFrame {
     }
 
 
+    private void addLoadButton() {
+        JButton button = new JButton("Load");
+        button.setLocation(HEIGTH, HEIGTH / 10 + 240);
+        button.setSize(200, 60);
+        button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(button);
 
-//    private void addLoadButton() {
-//        JButton button = new JButton("Load");
-//        button.setLocation(HEIGTH, HEIGTH / 10 + 240);
-//        button.setSize(200, 60);
-//        button.setFont(new Font("Rockwell", Font.BOLD, 20));
-//        add(button);
-//
 //        button.addActionListener(e -> {
 //            System.out.println("Click load");
 //            String path = JOptionPane.showInputDialog(this,"Input Path here");
 //            gameController.loadGameFromFile(path);
 //        });
-//    }
+    }
 
+    private void addRestartButton() {
+        JButton button = new JButton("Restrat");
+        button.setLocation(HEIGTH, HEIGTH / 10 + 360);
+        button.setSize(200, 60);
+        button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(button);
+//        button.addActionListener(e -> {
+//            gameController.restart;
+//        });
+
+    }
 
 }
