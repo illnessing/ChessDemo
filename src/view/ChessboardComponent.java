@@ -25,6 +25,8 @@ public class ChessboardComponent extends JComponent {
 	private final Set<ChessboardPoint> trapCell = new HashSet<>();
 	private final Set<ChessboardPoint> nestCell = new HashSet<>();
 
+	boolean[][] flag = new boolean[CHESSBOARD_ROW_SIZE.getNum()][CHESSBOARD_COL_SIZE.getNum()];
+
 
 	private GameController gameController;
 
@@ -176,29 +178,75 @@ public class ChessboardComponent extends JComponent {
 	protected void processMouseEvent(MouseEvent e) {
 		if (e.getID() == MouseEvent.MOUSE_PRESSED) {
 			JComponent clickedComponent = (JComponent) getComponentAt(e.getX(), e.getY());
-
 			if (clickedComponent.getComponentCount() == 0) {
 				System.out.print("None chess here and ");
 				gameController.onPlayerClickCell(getChessboardPoint(e.getPoint()), (CellComponent) clickedComponent);
+				//消除带有标记的，若点击空白格（移动）
+				for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
+					for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
+						ChessboardPoint temp = new ChessboardPoint(i, j);
+						CellComponent cell;
+						if (flag[i][j]) {
+							if(riverCell.contains(temp)){
+								gridComponents[i][j].setBackground(Color.CYAN);
+							}
+							else if(trapCell.contains(temp)){
+								gridComponents[i][j].setBackground(Color.WHITE);
+							}
+							else if(nestCell.contains(temp)){
+								gridComponents[i][j].setBackground(Color.YELLOW);
+							}
+							else{
+								gridComponents[i][j].setBackground(Color.LIGHT_GRAY);
+							}
+							gridComponents[i][j].repaint();
+							flag[i][j] = false;
+						}
+					}
+				}
 			}
             else {
+				//消除带有标记的，若点击棋子
+				for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
+					for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
+						ChessboardPoint temp = new ChessboardPoint(i, j);
+						CellComponent cell;
+						if (flag[i][j]) {
+							if(riverCell.contains(temp)){
+								gridComponents[i][j].setBackground(Color.CYAN);
+							}
+							else if(trapCell.contains(temp)){
+								gridComponents[i][j].setBackground(Color.WHITE);
+							}
+							else if(nestCell.contains(temp)){
+								gridComponents[i][j].setBackground(Color.YELLOW);
+							}
+							else{
+								gridComponents[i][j].setBackground(Color.LIGHT_GRAY);
+							}
+							gridComponents[i][j].repaint();
+							flag[i][j] = false;
+						}
+					}
+				}
+				//涂色并标记
+				for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
+					for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
+						ChessboardPoint temp = new ChessboardPoint(i, j);
+						CellComponent cell;
+						if (gameController.isValidCapture(onlyGetChessboardPoint(e.getPoint()), temp)) {
+							gridComponents[i][j].setBackground(Color.RED);
+							gridComponents[i][j].repaint();
+							flag[i][j]=true;
 
-//				for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
-//					for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
-//						ChessboardPoint temp = new ChessboardPoint(i, j);
-//						CellComponent cell;
-//						if (gameController.isValidCapture(onlyGetChessboardPoint(e.getPoint()), temp)) {
-//							gridComponents[i][j].setBackground(Color.RED);
-//							gridComponents[i][j].repaint();
-//
-//						}
-//                        else if (gameController.isValidMove(onlyGetChessboardPoint(e.getPoint()), temp)) {
-//							gridComponents[i][j].setBackground(Color.GREEN);
-//                            gridComponents[i][j].repaint();
-//
-//						}
-//					}
-//				}
+						}
+                        else if (gameController.isValidMove(onlyGetChessboardPoint(e.getPoint()), temp)) {
+							gridComponents[i][j].setBackground(Color.GREEN);
+                            gridComponents[i][j].repaint();
+							flag[i][j]=true;
+						}
+					}
+				}
 
 				System.out.print("One chess here and ");
 
