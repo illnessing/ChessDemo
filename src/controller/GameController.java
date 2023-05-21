@@ -177,5 +177,13 @@ public class GameController implements GameListener {
 
     public void ReStart(){
         //TODO Restart the game
+        model.initialize();
+        this.currentPlayer = PlayerColor.BLUE;
+        this.winID = 0;
+
+        //view.registerController(this);
+        initialize();
+        view.initiateChessComponent(model);
+        view.repaint();
     }
 }
