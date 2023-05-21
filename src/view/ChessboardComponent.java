@@ -23,7 +23,9 @@ public class ChessboardComponent extends JComponent {
 	private final int CHESS_SIZE;
 	private final Set<ChessboardPoint> riverCell = new HashSet<>();
 	private final Set<ChessboardPoint> trapCell = new HashSet<>();
-	private final Set<ChessboardPoint> nestCell = new HashSet<>();
+	private final Set<ChessboardPoint> blueDenCell = new HashSet<>();
+	private final Set<ChessboardPoint> redDenCell = new HashSet<>();
+
 
 	boolean[][] flag = new boolean[CHESSBOARD_ROW_SIZE.getNum()][CHESSBOARD_COL_SIZE.getNum()];
 
@@ -91,12 +93,12 @@ public class ChessboardComponent extends JComponent {
 		trapCell.add(new ChessboardPoint(0, 2));
 		trapCell.add(new ChessboardPoint(0, 4));
 		trapCell.add(new ChessboardPoint(1, 3));
-		nestCell.add(new ChessboardPoint(0, 3));
+		redDenCell.add(new ChessboardPoint(0, 3));
 
 		trapCell.add(new ChessboardPoint(8, 2));
 		trapCell.add(new ChessboardPoint(8, 4));
 		trapCell.add(new ChessboardPoint(7, 3));
-		nestCell.add(new ChessboardPoint(8, 3));
+		blueDenCell.add(new ChessboardPoint(8, 3));
 
 
 		for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
@@ -106,15 +108,12 @@ public class ChessboardComponent extends JComponent {
 				if (riverCell.contains(temp)) {
 					cell = new CellComponent(Color.CYAN, calculatePoint(i, j), CHESS_SIZE);
 					this.add(cell);
-
 				} else if (trapCell.contains(temp)) {
 					cell = new CellComponent(Color.WHITE, calculatePoint(i, j), CHESS_SIZE);
 					this.add(cell);
-					//cell.paintComponent();
-				} else if (nestCell.contains(temp)) {
+				} else if (blueDenCell.contains(temp)||redDenCell.contains(temp)){
 					cell = new CellComponent(Color.YELLOW, calculatePoint(i, j), CHESS_SIZE);
 					this.add(cell);
-					//cell.paintComponent();
 				} else {
 					cell = new CellComponent(Color.LIGHT_GRAY, calculatePoint(i, j), CHESS_SIZE);
 					this.add(cell);
@@ -167,25 +166,29 @@ public class ChessboardComponent extends JComponent {
 	}
 
 	public void showWin(int x) {
+//		若A胜利
 		if (x == 1) {
 			JOptionPane.showMessageDialog(this, "Player A Wins!");
+//			若B胜利
 		} else if (x == 2) {
 			JOptionPane.showMessageDialog(this, "Player B Wins!");
 		}
+//		若没有胜者
 	}
 
 	@Override
 	protected void processMouseEvent(MouseEvent e) {
+//		若鼠标点击（按下）
 		if (e.getID() == MouseEvent.MOUSE_PRESSED) {
 			JComponent clickedComponent = (JComponent) getComponentAt(e.getX(), e.getY());
+//			若选中空白格子
 			if (clickedComponent.getComponentCount() == 0) {
 				System.out.print("None chess here and ");
 				gameController.onPlayerClickCell(getChessboardPoint(e.getPoint()), (CellComponent) clickedComponent);
-				//消除带有标记的，若点击空白格（移动）
+//				消除带有标记的，若点击空白格（移动）
 				for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
 					for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
 						ChessboardPoint temp = new ChessboardPoint(i, j);
-						CellComponent cell;
 						if (flag[i][j]) {
 							if(riverCell.contains(temp)){
 								gridComponents[i][j].setBackground(Color.CYAN);
@@ -193,24 +196,25 @@ public class ChessboardComponent extends JComponent {
 							else if(trapCell.contains(temp)){
 								gridComponents[i][j].setBackground(Color.WHITE);
 							}
-							else if(nestCell.contains(temp)){
+							else if(blueDenCell.contains(temp)||redDenCell.contains(temp)){
 								gridComponents[i][j].setBackground(Color.YELLOW);
 							}
 							else{
 								gridComponents[i][j].setBackground(Color.LIGHT_GRAY);
 							}
 							gridComponents[i][j].repaint();
+//							消除标记
 							flag[i][j] = false;
 						}
 					}
 				}
 			}
+//			若选中的格子有棋子
             else {
 				//消除带有标记的，若点击棋子
 				for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
 					for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
 						ChessboardPoint temp = new ChessboardPoint(i, j);
-						CellComponent cell;
 						if (flag[i][j]) {
 							if(riverCell.contains(temp)){
 								gridComponents[i][j].setBackground(Color.CYAN);
@@ -218,13 +222,14 @@ public class ChessboardComponent extends JComponent {
 							else if(trapCell.contains(temp)){
 								gridComponents[i][j].setBackground(Color.WHITE);
 							}
-							else if(nestCell.contains(temp)){
+							else if(blueDenCell.contains(temp)||redDenCell.contains(temp)){
 								gridComponents[i][j].setBackground(Color.YELLOW);
 							}
 							else{
 								gridComponents[i][j].setBackground(Color.LIGHT_GRAY);
 							}
 							gridComponents[i][j].repaint();
+//							消除标记
 							flag[i][j] = false;
 						}
 					}
@@ -233,7 +238,6 @@ public class ChessboardComponent extends JComponent {
 				for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
 					for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
 						ChessboardPoint temp = new ChessboardPoint(i, j);
-						CellComponent cell;
 						if (gameController.isValidCapture(onlyGetChessboardPoint(e.getPoint()), temp)) {
 							gridComponents[i][j].setBackground(Color.RED);
 							gridComponents[i][j].repaint();
@@ -253,6 +257,7 @@ public class ChessboardComponent extends JComponent {
 				gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (ChessComponent) clickedComponent.getComponents()[0]);
 
 			}
+//			检测并显示是否有胜利的一方
 			showWin(gameController.checkWin());
 		}
 	}
