@@ -51,8 +51,10 @@ public class GameController implements GameListener {
         currentPlayer = currentPlayer == PlayerColor.BLUE ? PlayerColor.RED : PlayerColor.BLUE;
     }
 
+    public PlayerColor getCurrentPlayer(){return currentPlayer;}
+
     private boolean win() {
-        // TODO: If someone cannot move, they lose
+        // If someone cannot move, they lose
         if (currentPlayer == PlayerColor.BLUE){
             boolean flag = false;
             // try to move every Piece
@@ -171,5 +173,9 @@ public class GameController implements GameListener {
 
     public boolean isValidCapture(ChessboardPoint src, ChessboardPoint dest){
         return model.isValidCapture(src,dest);
+    }
+
+    public void ReStart(){
+        //TODO Restart the game
     }
 }
