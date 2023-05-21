@@ -181,6 +181,7 @@ public class ChessboardComponent extends JComponent {
 //		若鼠标点击（按下）
 		if (e.getID() == MouseEvent.MOUSE_PRESSED) {
 			JComponent clickedComponent = (JComponent) getComponentAt(e.getX(), e.getY());
+
 //			若选中空白格子
 			if (clickedComponent.getComponentCount() == 0) {
 				System.out.print("None chess here and ");
@@ -211,6 +212,9 @@ public class ChessboardComponent extends JComponent {
 			}
 //			若选中的格子有棋子
             else {
+				ChessboardPoint point = getChessboardPoint(e.getPoint());
+				ChessComponent chess = (ChessComponent) getGridComponentAt(point).getComponents()[0];
+				PlayerColor playerColor = gameController.getCurrentPlayer();
 				//消除带有标记的，若点击棋子
 				for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
 					for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
@@ -235,19 +239,21 @@ public class ChessboardComponent extends JComponent {
 					}
 				}
 				//涂色并标记
-				for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
-					for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
-						ChessboardPoint temp = new ChessboardPoint(i, j);
-						if (gameController.isValidCapture(onlyGetChessboardPoint(e.getPoint()), temp)) {
-							gridComponents[i][j].setBackground(Color.RED);
-							gridComponents[i][j].repaint();
-							flag[i][j]=true;
+				if(chess.getOwner() == playerColor){
+					for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
+						for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
+							ChessboardPoint temp = new ChessboardPoint(i, j);
+							if (gameController.isValidCapture(onlyGetChessboardPoint(e.getPoint()), temp)) {
+								gridComponents[i][j].setBackground(Color.RED);
+								gridComponents[i][j].repaint();
+								flag[i][j]=true;
 
-						}
-                        else if (gameController.isValidMove(onlyGetChessboardPoint(e.getPoint()), temp)) {
-							gridComponents[i][j].setBackground(Color.GREEN);
-                            gridComponents[i][j].repaint();
-							flag[i][j]=true;
+							}
+							else if (gameController.isValidMove(onlyGetChessboardPoint(e.getPoint()), temp)) {
+								gridComponents[i][j].setBackground(Color.GREEN);
+								gridComponents[i][j].repaint();
+								flag[i][j]=true;
+							}
 						}
 					}
 				}

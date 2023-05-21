@@ -30,4 +30,7 @@ public abstract class ChessComponent extends JComponent {
     protected void paintComponent(Graphics g) {
     }
 
+    public PlayerColor getOwner() {
+        return owner;
+    }
 }
