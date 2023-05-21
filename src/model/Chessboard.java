@@ -5,9 +5,18 @@ package model;
  * The Chessboard has 9*7 cells, and each cell has a position for chess
  */
 public class Chessboard {
-    private final Cell[][] grid;
+    private Cell[][] grid;
 
     public Chessboard() {
+        this.grid =
+                new Cell[Constant.CHESSBOARD_ROW_SIZE.getNum()][Constant.CHESSBOARD_COL_SIZE.getNum()];//19X19
+
+        initGrid();
+        initPieces();
+        initSpecialCell();
+    }
+
+    public void initialize(){
         this.grid =
                 new Cell[Constant.CHESSBOARD_ROW_SIZE.getNum()][Constant.CHESSBOARD_COL_SIZE.getNum()];//19X19
 
@@ -167,7 +176,7 @@ public class Chessboard {
 
 
     public boolean isValidCapture(ChessboardPoint src, ChessboardPoint dest) {
-        // TODO:Fix this method
+
         // capture need there is two chessPiece
         if (getChessPieceAt(src) == null || getChessPieceAt(dest) == null) {
             return false;

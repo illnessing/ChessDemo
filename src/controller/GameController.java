@@ -53,6 +53,8 @@ public class GameController implements GameListener {
 
     public PlayerColor getCurrentPlayer(){return currentPlayer;}
 
+    public ChessboardPoint getSelectedPoint(){return selectedPoint;}
+
     private boolean win() {
         // If someone cannot move, they lose
         if (currentPlayer == PlayerColor.BLUE){
@@ -177,5 +179,13 @@ public class GameController implements GameListener {
 
     public void ReStart(){
         //TODO Restart the game
+        model.initialize();
+        this.currentPlayer = PlayerColor.BLUE;
+        this.winID = 0;
+
+        //view.registerController(this);
+        initialize();
+        view.initiateChessComponent(model);
+        view.repaint();
     }
 }
