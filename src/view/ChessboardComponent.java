@@ -30,7 +30,7 @@ public class ChessboardComponent extends JComponent {
 	boolean[][] flag = new boolean[CHESSBOARD_ROW_SIZE.getNum()][CHESSBOARD_COL_SIZE.getNum()];
 
 
-	private GameController gameController;
+	protected GameController gameController;
 
 	public ChessboardComponent(int chessSize) {
 		CHESS_SIZE = chessSize;

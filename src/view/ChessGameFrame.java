@@ -17,6 +17,7 @@ public class ChessGameFrame extends JFrame {
     private final int ONE_CHESS_SIZE;
 
     private ChessboardComponent chessboardComponent;
+    private GameController gameController;
     public ChessGameFrame(int width, int height) {
         setTitle("2023 CS109 Project Demo"); //设置标题
         this.WIDTH = width;
@@ -98,9 +99,9 @@ public class ChessGameFrame extends JFrame {
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
-//        button.addActionListener(e -> {
-//            gameController.restart;
-//        });
+        button.addActionListener(e -> {
+            chessboardComponent.gameController.ReStart();
+        });
 
     }
 
