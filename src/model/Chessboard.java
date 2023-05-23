@@ -182,6 +182,9 @@ public class Chessboard {
             return false;
         }
 
+        // you cannot eat yourself
+        if (calculateDistance(src, dest) == 0) return false;
+
         //Tiger, Lion JUMP Capture
         if (
                 calculateDistance(src, dest) != 1 && (
