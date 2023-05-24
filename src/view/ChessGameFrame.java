@@ -5,6 +5,7 @@ import model.Chessboard;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 /**
  * 这个类表示游戏过程中的整个游戏界面，是一切的载体
@@ -35,6 +36,7 @@ public class ChessGameFrame extends JFrame {
         addHelloButton();
         addRestartButton();
         addLoadButton();
+        addSaveButton();
     }
 
     public ChessboardComponent getChessboardComponent() {
@@ -85,6 +87,28 @@ public class ChessGameFrame extends JFrame {
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
+
+//        button.addActionListener(e -> {
+//            System.out.println("Click load");
+//            String path = JOptionPane.showInputDialog(this,"Input Path here");
+//            gameController.loadGameFromFile(path);
+//        });
+    }
+
+    private void addSaveButton() {
+        JButton button = new JButton("Save");
+        button.setLocation(HEIGTH, HEIGTH / 10 + 480);
+        button.setSize(200, 60);
+        button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(button);
+        button.addActionListener(e -> {
+            try {
+                chessboardComponent.gameController.Save("./resource/1.txt");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
 
 //        button.addActionListener(e -> {
 //            System.out.println("Click load");

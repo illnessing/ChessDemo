@@ -3,9 +3,16 @@ package controller;
 
 import listener.GameListener;
 import model.*;
+import netscape.javascript.JSObject;
 import view.CellComponent;
 import view.ChessComponent;
 import view.ChessboardComponent;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Controller is the connection between model and view,
@@ -24,6 +31,9 @@ public class GameController implements GameListener {
     // Record whether there is a selected piece before
     private ChessboardPoint selectedPoint;
 
+    // To restore the history grid
+    private ArrayList<Cell[][]> history;
+
     private int winID;
 
     public GameController(ChessboardComponent view, Chessboard model) {
@@ -36,6 +46,9 @@ public class GameController implements GameListener {
         initialize();
         view.initiateChessComponent(model);
         view.repaint();
+
+        history = new ArrayList<>();
+        history.add(model.getClonedGrid());
     }
 
     private void initialize() {
@@ -128,9 +141,7 @@ public class GameController implements GameListener {
         if (selectedPoint != null && model.isValidMove(selectedPoint, point)) {
             model.moveChessPiece(selectedPoint, point);
             view.setChessComponentAtGrid(point, view.removeChessComponentAtGrid(selectedPoint));
-            selectedPoint = null;
-            swapColor();
-            view.repaint();
+            AfterPlayerAction();
             // TODO: if the chess enter Dens or Traps and so on
         }
     }
@@ -154,10 +165,16 @@ public class GameController implements GameListener {
             model.captureChessPiece(selectedPoint, point);
             view.removeChessComponentAtGrid(point);
             view.setChessComponentAtGrid(point, view.removeChessComponentAtGrid(selectedPoint));
-            selectedPoint = null;
-            swapColor();
-            view.repaint();
+            AfterPlayerAction();
         }
+    }
+
+    private void AfterPlayerAction(){
+        selectedPoint = null;
+        swapColor();
+        view.repaint();
+
+        history.add(model.getClonedGrid());
     }
 
     /// <summary>
@@ -178,14 +195,50 @@ public class GameController implements GameListener {
     }
 
     public void ReStart(){
-        //TODO Restart the game
+        //Restart the game
         model.initialize();
         this.currentPlayer = PlayerColor.BLUE;
         this.winID = 0;
+        selectedPoint = null;
 
         //view.registerController(this);
         initialize();
         view.initiateChessComponent(model);
         view.repaint();
+
+        history = new ArrayList<>();
+        history.add(model.getGrid().clone());
+    }
+
+    public void Save(String path) throws IOException {
+        String saveText = SavetoString();
+
+        BufferedWriter bw = new BufferedWriter(new FileWriter(path));
+        bw.write(saveText);
+        bw.close();
+        System.out.println("保存成功");
+    }
+
+    public String StringToSave(String Savetext){
+        // TODO: 读取存档
+        return "";
+    }
+
+    public String SavetoString(){
+        StringBuilder result = new StringBuilder();
+        result.append(currentPlayer.toString()).append("\n");
+        for (Cell[][] time_slice: history){
+            for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+                for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                    if (time_slice[i][j].getPiece() == null) result.append("0");
+                    else result.append(time_slice[i][j].getPiece().getType().ordinal() + 20*time_slice[i][j].getPiece().getOwner().ordinal());
+
+                    result.append(' ');
+                }
+                result.append("\n");
+            }
+            result.append("\n");
+        }
+        return result.toString();
     }
 }

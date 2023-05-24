@@ -29,5 +29,13 @@ public class Cell implements Serializable {
     public CellType getCellType(){
         return cellType;
     }
+
+    public Cell clone(){
+        //Cell clone = (Cell) super.clone();
+        Cell result = new Cell();
+        result.setCellType(cellType);
+        result.setPiece(piece);
+        return result;
+    }
 }
 

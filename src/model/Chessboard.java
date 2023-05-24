@@ -124,6 +124,15 @@ public class Chessboard {
     public Cell[][] getGrid() {
         return grid;
     }
+    public Cell[][] getClonedGrid() {
+        Cell[][] result = new Cell[Constant.CHESSBOARD_ROW_SIZE.getNum()][Constant.CHESSBOARD_COL_SIZE.getNum()];//19X19
+        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                result[i][j] = grid[i][j].clone();
+            }
+        }
+        return result;
+    }
     public PlayerColor getChessPieceOwner(ChessboardPoint point) {
         return getGridAt(point).getPiece().getOwner();
     }
