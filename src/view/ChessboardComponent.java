@@ -181,6 +181,8 @@ public class ChessboardComponent extends JComponent {
 
 	@Override
 	protected void processMouseEvent(MouseEvent e) {
+		PlayerColor playerColor = gameController.getCurrentPlayer();
+		ChessGameFrame.statusLabel.setText(playerColor.toString());
 //		若鼠标点击（按下）
 		if (e.getID() == MouseEvent.MOUSE_PRESSED) {
 			JComponent clickedComponent = (JComponent) getComponentAt(e.getX(), e.getY());
@@ -231,7 +233,6 @@ public class ChessboardComponent extends JComponent {
 				gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (ChessComponent) clickedComponent.getComponents()[0]);
 				ChessboardPoint point = onlyGetChessboardPoint(e.getPoint());
 				ChessComponent chess = (ChessComponent) getGridComponentAt(point).getComponents()[0];
-				PlayerColor playerColor = gameController.getCurrentPlayer();
 //				消除带有标记的，若点击棋子
 				if (gameController.getSelectedPoint() == null) {
 					for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {

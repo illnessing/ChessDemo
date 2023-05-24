@@ -19,6 +19,15 @@ public enum PlayerColor {
     public Color getColor() {
         return color;
     }
+    @Override public String toString(){
+        if (color==Color.BLUE){
+            return "A";
+        }
+        else {
+            return "B";
+        }
+    }
 
 
 }
+
