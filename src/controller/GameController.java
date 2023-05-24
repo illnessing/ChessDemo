@@ -9,10 +9,12 @@ import view.ChessComponent;
 import view.ChessboardComponent;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
 /**
  * Controller is the connection between model and view,
@@ -210,13 +212,42 @@ public class GameController implements GameListener {
         history.add(model.getGrid().clone());
     }
 
+    public void Load(String path) throws IOException, SaveBrokenException {
+        Scanner input = new Scanner(new File(path));
+        StringToSave(input);
+
+        System.out.println("成功加载：" + path);
+
+    }
+
     public void Save(String path) throws IOException {
         String saveText = SavetoString();
 
         BufferedWriter bw = new BufferedWriter(new FileWriter(path));
         bw.write(saveText);
         bw.close();
-        System.out.println("保存成功");
+        System.out.println("成功保存在" + path);
+    }
+
+    public void StringToSave(Scanner input) throws SaveBrokenException {
+        ArrayList<Cell[][]> result = new ArrayList<>();
+
+        while (input.hasNext()){
+            Cell[][] g = new Cell[Constant.CHESSBOARD_ROW_SIZE.getNum()][Constant.CHESSBOARD_COL_SIZE.getNum()];
+            for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+                for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                    int id = input.nextInt();
+                    g[i][j] = new Cell();
+                    if (id % 20 > 8 || id < 0 || id > 28) throw new SaveBrokenException();
+                    if (id != 0){
+                        g[i][j].setPiece(new ChessPiece(PlayerColor.values()[id / 20], ChessPiece.PieceType.values()[id % 20]));
+                    }
+                }
+            }
+            result.add(g);
+        }
+
+        history = result;
     }
 
     public String StringToSave(String Savetext){
@@ -226,7 +257,7 @@ public class GameController implements GameListener {
 
     public String SavetoString(){
         StringBuilder result = new StringBuilder();
-        result.append(currentPlayer.toString()).append("\n");
+        //result.append(currentPlayer.toString()).append("\n");
         for (Cell[][] time_slice: history){
             for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
                 for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
