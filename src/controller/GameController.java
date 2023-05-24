@@ -221,6 +221,18 @@ public class GameController implements GameListener {
         history.add(model.getGrid().clone());
     }
 
+    public void LoadLastStep(){
+        if (turnIndex <= 0) return;
+        turnIndex -= 1;
+        LoadHistory(turnIndex);
+    }
+
+    public void LoadNextStep(){
+        if (turnIndex >= history.size()-1) return;
+        turnIndex += 1;
+        LoadHistory(turnIndex);
+    }
+
     public void Load(String path) throws IOException, SaveBrokenException {
         Scanner input = new Scanner(new File(path));
         StringToSave(input);
