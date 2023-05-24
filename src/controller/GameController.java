@@ -303,4 +303,30 @@ public class GameController implements GameListener {
         model.LoadGrid(history.get(index));
         turnIndex = index;
     }
+
+    public ChessboardPoint getLastStepSrc(){
+        if (turnIndex <= 0) return null;
+        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                if (history.get(turnIndex - 1)[i][j].getPiece() != null && history.get(turnIndex)[i][j].getPiece() == null)
+                    return new ChessboardPoint(i,j);
+            }
+        }
+        return null;
+    }
+
+    public ChessboardPoint getLastStepDest(){
+        if (turnIndex <= 0) return null;
+        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                if (
+                        history.get(turnIndex)[i][j].getPiece() != null &&(
+                        history.get(turnIndex - 1)[i][j].getPiece().getOwner() != history.get(turnIndex)[i][j].getPiece().getOwner() ||
+                        history.get(turnIndex - 1)[i][j].getPiece().getType() != history.get(turnIndex)[i][j].getPiece().getType())
+                )
+                    return new ChessboardPoint(i,j);
+            }
+        }
+        return null;
+    }
 }
