@@ -2,7 +2,7 @@ package view;
 
 import controller.GameController;
 import model.Chessboard;
-import model.SaveBrokenException;
+import model.PlayerColor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +19,8 @@ public class ChessGameFrame extends JFrame {
     private final int ONE_CHESS_SIZE;
 
     private ChessboardComponent chessboardComponent;
-    private GameController gameController;
+    public static JLabel statusLabel = new JLabel();
+
     public ChessGameFrame(int width, int height) {
         setTitle("2023 CS109 Project Demo"); //设置标题
         this.WIDTH = width;
@@ -57,16 +58,18 @@ public class ChessGameFrame extends JFrame {
         add(chessboardComponent);
     }
 
+
     /**
      * 在游戏面板中添加标签
      */
     private void addLabel() {
-        JLabel statusLabel = new JLabel("Sample label");
+        statusLabel = new JLabel("A");
         statusLabel.setLocation(HEIGTH, HEIGTH / 10);
         statusLabel.setSize(200, 60);
         statusLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(statusLabel);
     }
+
 
     /**
      * 在游戏面板中增加一个按钮，如果按下的话就会显示Hello, world!
@@ -88,16 +91,6 @@ public class ChessGameFrame extends JFrame {
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
-
-        button.addActionListener(e -> {
-            try {
-                chessboardComponent.gameController.Load("./resource/1.txt");
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            } catch (SaveBrokenException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
 
 //        button.addActionListener(e -> {
 //            System.out.println("Click load");
@@ -136,6 +129,8 @@ public class ChessGameFrame extends JFrame {
         add(button);
         button.addActionListener(e -> {
             chessboardComponent.gameController.ReStart();
+            PlayerColor playerColor = chessboardComponent.gameController.getCurrentPlayer();
+            ChessGameFrame.statusLabel.setText(playerColor.toString());
         });
 
     }
