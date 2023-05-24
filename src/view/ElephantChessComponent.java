@@ -17,7 +17,7 @@ public class ElephantChessComponent extends ChessComponent {
 
     public ElephantChessComponent(PlayerColor owner, int size) {
         super(owner, size);
-        setSize(size/2, size/2);
+        setSize(size, size);
         setLocation(0,0);
         setVisible(true);
     }
@@ -35,7 +35,7 @@ public class ElephantChessComponent extends ChessComponent {
 
         if (isSelected()) { // Highlights the model if selected.
             g.setColor(Color.RED);
-            g.drawOval(0, 0, getWidth() , getHeight());
+            g.drawOval(2, 2, getWidth()-4, getHeight()-4);
         }
         //画图片
         if(owner.getColor()==Color.blue) {
@@ -45,7 +45,7 @@ public class ElephantChessComponent extends ChessComponent {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+            g.drawImage(image, 6, 4, getWidth()-12, getHeight()-12, null);
         }
         else{
             Image image = null;
@@ -54,7 +54,7 @@ public class ElephantChessComponent extends ChessComponent {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+            g.drawImage(image, 6, 4 , getWidth()-12, getHeight()-12, null);
         }
     }
 }

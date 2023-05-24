@@ -54,6 +54,8 @@ public class ChessboardComponent extends JComponent {
 		for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
 			for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
 				// TODO: Implement the initialization checkerboard
+				if(gridComponents[i][j].getComponentCount()==1)
+				gridComponents[i][j].remove(0);
 
 				if (grid[i][j].getPiece() != null) {
 					ChessPiece chessPiece = grid[i][j].getPiece();
@@ -181,7 +183,9 @@ public class ChessboardComponent extends JComponent {
 //		若鼠标点击（按下）
 		if (e.getID() == MouseEvent.MOUSE_PRESSED) {
 			JComponent clickedComponent = (JComponent) getComponentAt(e.getX(), e.getY());
-
+//			int x = onlyGetChessboardPoint(e.getPoint()).getRow();
+//			int y = onlyGetChessboardPoint(e.getPoint()).getCol();
+//			CellComponent clickedCellComponent = gridComponents[x][y];
 //			若选中空白格子
 			if (clickedComponent.getComponentCount() == 0) {
 				System.out.print("None chess here and ");
@@ -192,18 +196,29 @@ public class ChessboardComponent extends JComponent {
 						ChessboardPoint temp = new ChessboardPoint(i, j);
 						if (flag[i][j]) {
 							if(riverCell.contains(temp)){
-								gridComponents[i][j].setBackground(Color.CYAN);
+								Graphics graphics = gridComponents[i][j].getGraphics();
+								graphics.setColor(Color.CYAN);
+								graphics.drawRect(5,5,66,66);
+								graphics.dispose();
 							}
 							else if(trapCell.contains(temp)){
-								gridComponents[i][j].setBackground(Color.WHITE);
+								Graphics graphics = gridComponents[i][j].getGraphics();
+								graphics.setColor(Color.WHITE);
+								graphics.drawRect(5,5,66,66);
+								graphics.dispose();
 							}
 							else if(blueDenCell.contains(temp)||redDenCell.contains(temp)){
-								gridComponents[i][j].setBackground(Color.YELLOW);
+								Graphics graphics = gridComponents[i][j].getGraphics();
+								graphics.setColor(Color.YELLOW);
+								graphics.drawRect(5,5,66,66);
+								graphics.dispose();
 							}
 							else{
-								gridComponents[i][j].setBackground(Color.LIGHT_GRAY);
+								Graphics graphics = gridComponents[i][j].getGraphics();
+								graphics.setColor(Color.LIGHT_GRAY);
+								graphics.drawRect(5,5,66,66);
+								graphics.dispose();
 							}
-							gridComponents[i][j].repaint();
 //							消除标记
 							flag[i][j] = false;
 						}
@@ -212,27 +227,41 @@ public class ChessboardComponent extends JComponent {
 			}
 //			若选中的格子有棋子
             else {
-				ChessboardPoint point = getChessboardPoint(e.getPoint());
+				System.out.print("One chess here and ");
+				gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (ChessComponent) clickedComponent.getComponents()[0]);
+				ChessboardPoint point = onlyGetChessboardPoint(e.getPoint());
 				ChessComponent chess = (ChessComponent) getGridComponentAt(point).getComponents()[0];
 				PlayerColor playerColor = gameController.getCurrentPlayer();
-				//消除带有标记的，若点击棋子
+//				消除带有标记的，若点击棋子
 				for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
 					for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
 						ChessboardPoint temp = new ChessboardPoint(i, j);
 						if (flag[i][j]) {
 							if(riverCell.contains(temp)){
-								gridComponents[i][j].setBackground(Color.CYAN);
+								Graphics graphics = gridComponents[i][j].getGraphics();
+								graphics.setColor(Color.CYAN);
+								graphics.drawRect(5,5,66,66);
+								graphics.dispose();
 							}
 							else if(trapCell.contains(temp)){
-								gridComponents[i][j].setBackground(Color.WHITE);
+								Graphics graphics = gridComponents[i][j].getGraphics();
+								graphics.setColor(Color.WHITE);
+								graphics.drawRect(5,5,66,66);
+								graphics.dispose();
 							}
 							else if(blueDenCell.contains(temp)||redDenCell.contains(temp)){
-								gridComponents[i][j].setBackground(Color.YELLOW);
+								Graphics graphics = gridComponents[i][j].getGraphics();
+								graphics.setColor(Color.YELLOW);
+								graphics.drawRect(5,5,66,66);
+								graphics.dispose();
 							}
 							else{
-								gridComponents[i][j].setBackground(Color.LIGHT_GRAY);
+								Graphics graphics = gridComponents[i][j].getGraphics();
+								graphics.setColor(Color.LIGHT_GRAY);
+								graphics.drawRect(5,5,66,66);
+								graphics.dispose();
+//								gridComponents[i][j].repaint();
 							}
-							gridComponents[i][j].repaint();
 //							消除标记
 							flag[i][j] = false;
 						}
@@ -240,28 +269,27 @@ public class ChessboardComponent extends JComponent {
 				}
 				//涂色并标记
 				if(chess.getOwner() == playerColor){
-					for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
-						for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
-							ChessboardPoint temp = new ChessboardPoint(i, j);
-							if (gameController.isValidCapture(onlyGetChessboardPoint(e.getPoint()), temp)) {
-								gridComponents[i][j].setBackground(Color.RED);
-								gridComponents[i][j].repaint();
-								flag[i][j]=true;
-
-							}
-							else if (gameController.isValidMove(onlyGetChessboardPoint(e.getPoint()), temp)) {
-								gridComponents[i][j].setBackground(Color.GREEN);
-								gridComponents[i][j].repaint();
-								flag[i][j]=true;
+					if(chess.isSelected()){
+						for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
+							for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
+								ChessboardPoint temp = new ChessboardPoint(i, j);
+								if (gameController.isValidCapture(onlyGetChessboardPoint(e.getPoint()), temp)) {
+									Graphics graphics = gridComponents[i][j].getGraphics();
+									graphics.setColor(Color.GREEN);
+									graphics.drawRect(5,5,66,66);
+									graphics.dispose();
+									flag[i][j] = true;
+								} else if (gameController.isValidMove(onlyGetChessboardPoint(e.getPoint()), temp)) {
+									Graphics graphics = gridComponents[i][j].getGraphics();
+									graphics.setColor(Color.MAGENTA);
+									graphics.drawRect(5,5,66,66);
+									graphics.dispose();
+									flag[i][j] = true;
+								}
 							}
 						}
 					}
 				}
-
-				System.out.print("One chess here and ");
-
-				gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (ChessComponent) clickedComponent.getComponents()[0]);
-
 			}
 //			检测并显示是否有胜利的一方
 			showWin(gameController.checkWin());

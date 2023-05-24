@@ -14,7 +14,7 @@ public class TigerChessComponent extends ChessComponent {
 
 	public TigerChessComponent(PlayerColor owner, int size) {
 		super(owner, size);
-		setSize(size/2, size/2);
+		setSize(size, size);
 		setLocation(0,0);
 		setVisible(true);
 	}
@@ -31,7 +31,7 @@ public class TigerChessComponent extends ChessComponent {
 		g2.drawString("虎", getWidth() / 4, getHeight() * 5 / 8); // FIXME: Use library to find the correct offset.
 		if (isSelected()) { // Highlights the model if selected.
 			g.setColor(Color.RED);
-			g.drawOval(0, 0, getWidth() , getHeight());
+			g.drawOval(2, 2, getWidth()-4, getHeight()-4);
 		}
 	}
 }
