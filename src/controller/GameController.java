@@ -175,6 +175,7 @@ public class GameController implements GameListener {
     }
 
     private void AfterPlayerAction(){
+        win();
         selectedPoint = null;
         swapColor();
         view.repaint();
