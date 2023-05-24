@@ -237,6 +237,8 @@ public class Chessboard {
         if (getGridAt(src).getCellType() == CellType.River && getGridAt(dest).getCellType() == CellType.Land) return false;
         // only rat can enter river
         if (getGridAt(dest).getCellType() == CellType.River && getChessPieceAt(src).getType() != ChessPiece.PieceType.Rat) return false;
+        // everyone stay in trap, lose their power
+        if (getGridAt(src).getCellType() == CellType.Trap) return false;
         // everyone can capture the animal in trap
         if (getGridAt(dest).getCellType() == CellType.Trap) return true;
         // distant equal 1 and can Capture
