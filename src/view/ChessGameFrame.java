@@ -2,6 +2,7 @@ package view;
 
 import controller.GameController;
 import model.Chessboard;
+import model.SaveBrokenException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -87,6 +88,16 @@ public class ChessGameFrame extends JFrame {
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
+
+        button.addActionListener(e -> {
+            try {
+                chessboardComponent.gameController.Load("./resource/1.txt");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            } catch (SaveBrokenException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
 //        button.addActionListener(e -> {
 //            System.out.println("Click load");

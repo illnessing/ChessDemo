@@ -124,6 +124,15 @@ public class Chessboard {
     public Cell[][] getGrid() {
         return grid;
     }
+
+    public void LoadGrid(Cell[][] g){
+        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                grid[i][j].setPiece(g[i][j].getPiece());
+            }
+        }
+    }
+
     public Cell[][] getClonedGrid() {
         Cell[][] result = new Cell[Constant.CHESSBOARD_ROW_SIZE.getNum()][Constant.CHESSBOARD_COL_SIZE.getNum()];//19X19
         for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {

@@ -36,6 +36,8 @@ public class GameController implements GameListener {
     // To restore the history grid
     private ArrayList<Cell[][]> history;
 
+    private int turnIndex;
+
     private int winID;
 
     public GameController(ChessboardComponent view, Chessboard model) {
@@ -51,6 +53,7 @@ public class GameController implements GameListener {
 
         history = new ArrayList<>();
         history.add(model.getClonedGrid());
+        turnIndex = 0;
     }
 
     private void initialize() {
@@ -176,7 +179,12 @@ public class GameController implements GameListener {
         swapColor();
         view.repaint();
 
+        // 若悔棋之后再动，则遗忘未来的步数
+        if (turnIndex == history.size() - 1)
+            while (history.size() - 1 > turnIndex) history.remove(history.size() - 1);
+
         history.add(model.getClonedGrid());
+        turnIndex += 1;
     }
 
     /// <summary>
@@ -215,7 +223,7 @@ public class GameController implements GameListener {
     public void Load(String path) throws IOException, SaveBrokenException {
         Scanner input = new Scanner(new File(path));
         StringToSave(input);
-
+        LoadHistory(turnIndex);
         System.out.println("成功加载：" + path);
 
     }
@@ -248,6 +256,9 @@ public class GameController implements GameListener {
         }
 
         history = result;
+
+        currentPlayer = PlayerColor.values()[history.size() % 2];
+        turnIndex = history.size() - 1;
     }
 
     public String StringToSave(String Savetext){
@@ -271,5 +282,12 @@ public class GameController implements GameListener {
             result.append("\n");
         }
         return result.toString();
+    }
+
+    public int getTurnIndex(){return turnIndex;}
+
+    public void LoadHistory(int index){
+        model.LoadGrid(history.get(index));
+        turnIndex = index;
     }
 }
