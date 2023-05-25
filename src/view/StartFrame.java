@@ -34,6 +34,8 @@ public class StartFrame extends JFrame {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置程序关闭按键，如果点击右上方的叉就游戏全部关闭了
 		setLayout(null);
 
+
+
 		addLabel();
 		addStartButton();
 		addExitButton();
@@ -57,6 +59,17 @@ public class StartFrame extends JFrame {
 			SwingUtilities.invokeLater(() -> {
 				ChessGameFrame mainFrame = new ChessGameFrame(1100, 810);
 				GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
+				//1.把图片添加到标签里（把标签的大小设为和图片大小相同），把标签放在分层面板的最底层；
+				ImageIcon bg=new ImageIcon("./resource/background.png");
+				JLabel label=new JLabel(bg);
+				label.setSize(1100,810);
+				mainFrame.getLayeredPane().add(label,new Integer(Integer.MIN_VALUE));
+				//2.把窗口面板设为内容面板并设为透明。
+				JPanel pan=(JPanel)mainFrame.getContentPane();
+				pan.setOpaque(false);
+				mainFrame.setSize(1100,810);
+				mainFrame.setLocationRelativeTo(null);
+				mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				mainFrame.setVisible(true);
 			});
 			this.setVisible(false);
@@ -68,6 +81,7 @@ public class StartFrame extends JFrame {
 		button.setLocation(50, HEIGTH / 10 + 240);
 		button.setSize(200, 60);
 		button.setFont(new Font("Rockwell", Font.BOLD, 20));
+//		button.setContentAreaFilled(false);
 		add(button);
 		button.addActionListener(e -> {
 			System.exit(0);
