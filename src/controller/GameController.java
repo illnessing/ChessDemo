@@ -193,6 +193,7 @@ public class GameController implements GameListener {
     /// </summary>
     /// <returns>0:no one win, 1:Player1 win, 2:Player2 win</returns>
     public int checkWin(){
+        win();
         return winID;
         //throw new IllegalArgumentException("I don't know who is the winner. May the winner is audience!");
     }
@@ -219,18 +220,25 @@ public class GameController implements GameListener {
 
         history = new ArrayList<>();
         history.add(model.getGrid().clone());
+        turnIndex = 0;
     }
 
     public void LoadLastStep(){
         if (turnIndex <= 0) return;
         turnIndex -= 1;
         LoadHistory(turnIndex);
+        currentPlayer = PlayerColor.values()[(turnIndex) % 2];
+        view.initiateChessComponent(model);
+        view.repaint();
     }
 
     public void LoadNextStep(){
         if (turnIndex >= history.size()-1) return;
         turnIndex += 1;
         LoadHistory(turnIndex);
+        currentPlayer = PlayerColor.values()[(turnIndex) % 2];
+        view.initiateChessComponent(model);
+        view.repaint();
     }
 
     public void Load(String path) throws IOException, SaveBrokenException {
@@ -238,6 +246,8 @@ public class GameController implements GameListener {
         StringToSave(input);
         LoadHistory(turnIndex);
         System.out.println("成功加载：" + path);
+        view.initiateChessComponent(model);
+        view.repaint();
 
     }
 
@@ -270,7 +280,7 @@ public class GameController implements GameListener {
 
         history = result;
 
-        currentPlayer = PlayerColor.values()[history.size() % 2];
+        currentPlayer = PlayerColor.values()[(history.size() + 1) % 2];
         turnIndex = history.size() - 1;
     }
 

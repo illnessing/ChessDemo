@@ -182,7 +182,7 @@ public class ChessboardComponent extends JComponent {
 	@Override
 	protected void processMouseEvent(MouseEvent e) {
 		PlayerColor playerColor = gameController.getCurrentPlayer();
-		ChessGameFrame.statusLabel.setText(playerColor.toString());
+		ChessGameFrame.statusLabel.setText("Player: "+playerColor.toString()+"	Turn: "+ gameController.getTurnIndex());
 //		若鼠标点击（按下）
 		if (e.getID() == MouseEvent.MOUSE_PRESSED) {
 			JComponent clickedComponent = (JComponent) getComponentAt(e.getX(), e.getY());
@@ -290,7 +290,7 @@ public class ChessboardComponent extends JComponent {
 					}
 				}
 			}
-//			检测并显示是否有胜利的一方
+//		检测并显示是否有胜利的一方
 			showWin(gameController.checkWin());
 		}
 	}

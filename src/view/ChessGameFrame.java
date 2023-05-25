@@ -3,6 +3,7 @@ package view;
 import controller.GameController;
 import model.Chessboard;
 import model.PlayerColor;
+import model.SaveBrokenException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +22,7 @@ public class ChessGameFrame extends JFrame {
     private ChessboardComponent chessboardComponent;
     public static JLabel statusLabel = new JLabel();
 
+
     public ChessGameFrame(int width, int height) {
         setTitle("2023 CS109 Project Demo"); //设置标题
         this.WIDTH = width;
@@ -35,7 +37,8 @@ public class ChessGameFrame extends JFrame {
 
         addChessboard();
         addLabel();
-        addHelloButton();
+        addLoadLastStepButton();
+        addLoadNextStepButton();
         addRestartButton();
         addLoadButton();
         addSaveButton();
@@ -63,7 +66,7 @@ public class ChessGameFrame extends JFrame {
      * 在游戏面板中添加标签
      */
     private void addLabel() {
-        statusLabel = new JLabel("A");
+        statusLabel = new JLabel("Player: A"+"  Turn: "+ 0);
         statusLabel.setLocation(HEIGTH, HEIGTH / 10);
         statusLabel.setSize(200, 60);
         statusLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
@@ -75,23 +78,53 @@ public class ChessGameFrame extends JFrame {
      * 在游戏面板中增加一个按钮，如果按下的话就会显示Hello, world!
      */
 
-    private void addHelloButton() {
-        JButton button = new JButton("Show Hello Here");
-        button.addActionListener((e) -> JOptionPane.showMessageDialog(this, "Hello, world!"));
+    private void addLoadLastStepButton() {
+        JButton button = new JButton("LoadLastStep");
         button.setLocation(HEIGTH, HEIGTH / 10 + 120);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
+        button.addActionListener(e -> {
+            chessboardComponent.gameController.LoadLastStep();
+            PlayerColor playerColor = chessboardComponent.gameController.getCurrentPlayer();
+            ChessGameFrame.statusLabel.setText("Player: "+playerColor.toString()+"  Turn: "+
+                    chessboardComponent.gameController.getTurnIndex());
+        });
+    }
+    private void addLoadNextStepButton() {
+        JButton button = new JButton("LoadNextStep");
+        button.setLocation(HEIGTH, HEIGTH / 10 + 240);
+        button.setSize(200, 60);
+        button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(button);
+        button.addActionListener(e -> {
+            chessboardComponent.gameController.LoadNextStep();
+            PlayerColor playerColor = chessboardComponent.gameController.getCurrentPlayer();
+            ChessGameFrame.statusLabel.setText("Player: "+playerColor.toString()+"  Turn: "+
+                    chessboardComponent.gameController.getTurnIndex());
+        });
     }
 
 
     private void addLoadButton() {
         JButton button = new JButton("Load");
-        button.setLocation(HEIGTH, HEIGTH / 10 + 240);
+        button.setLocation(HEIGTH, HEIGTH / 10 + 360);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
 
+        button.addActionListener(e -> {
+            try {
+                chessboardComponent.gameController.Load("./resource/2.txt");
+                PlayerColor playerColor = chessboardComponent.gameController.getCurrentPlayer();
+                ChessGameFrame.statusLabel.setText("Player: "+playerColor.toString()+"  Turn: "+
+                        chessboardComponent.gameController.getTurnIndex());
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            } catch (SaveBrokenException ex) {
+                JOptionPane.showMessageDialog(this, "Save Broken!");
+            }
+        });
 //        button.addActionListener(e -> {
 //            System.out.println("Click load");
 //            String path = JOptionPane.showInputDialog(this,"Input Path here");
@@ -107,9 +140,10 @@ public class ChessGameFrame extends JFrame {
         add(button);
         button.addActionListener(e -> {
             try {
-                chessboardComponent.gameController.Save("./resource/1.txt");
+                chessboardComponent.gameController.Save("./resource/2.txt");
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
+
             }
         });
 
@@ -123,14 +157,14 @@ public class ChessGameFrame extends JFrame {
 
     private void addRestartButton() {
         JButton button = new JButton("Restrat");
-        button.setLocation(HEIGTH, HEIGTH / 10 + 360);
+        button.setLocation(HEIGTH, HEIGTH / 10 + 600);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
         button.addActionListener(e -> {
             chessboardComponent.gameController.ReStart();
             PlayerColor playerColor = chessboardComponent.gameController.getCurrentPlayer();
-            ChessGameFrame.statusLabel.setText(playerColor.toString());
+            ChessGameFrame.statusLabel.setText("Player: "+playerColor.toString()+"  Turn: "+ 0);
         });
 
     }
