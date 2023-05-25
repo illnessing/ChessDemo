@@ -8,7 +8,7 @@ import javax.swing.*;
 public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            StartFrame mainFrame = new StartFrame(1100, 810);
+            StartFrame mainFrame = new StartFrame(300, 700);
             mainFrame.setVisible(true);
         });
     }
