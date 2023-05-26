@@ -1,9 +1,7 @@
 package view;
 
-import controller.GameController;
-import model.Chessboard;
 import model.PlayerColor;
-import model.SaveBrokenException;
+import Exception.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -121,8 +119,14 @@ public class ChessGameFrame extends JFrame {
                         chessboardComponent.gameController.getTurnIndex());
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
-            } catch (SaveBrokenException ex) {
+            } catch (WrongChessException ex) {
                 JOptionPane.showMessageDialog(this, "Save Broken!");
+            } catch (NoFileThereException ex) {
+                throw new RuntimeException(ex);
+            } catch (WrongFormatException ex) {
+                throw new RuntimeException(ex);
+            } catch (WrongChessBoardSizeException ex) {
+                throw new RuntimeException(ex);
             }
         });
 //        button.addActionListener(e -> {

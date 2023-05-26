@@ -1,9 +1,10 @@
 package controller;
 
 
+import com.sun.source.tree.WhileLoopTree;
 import listener.GameListener;
 import model.*;
-import netscape.javascript.JSObject;
+import Exception.*;
 import view.CellComponent;
 import view.ChessComponent;
 import view.ChessboardComponent;
@@ -13,7 +14,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
 
 /**
@@ -241,14 +241,37 @@ public class GameController implements GameListener {
         view.repaint();
     }
 
-    public void Load(String path) throws IOException, SaveBrokenException {
-        Scanner input = new Scanner(new File(path));
+    public void Load(String path) throws IOException, WrongChessException, NoFileThereException, WrongFormatException, WrongChessBoardSizeException {
+        if (!path.endsWith(".txt")) throw new WrongFormatException();
+        File f = new File(path);
+        if (!f.exists()) throw new NoFileThereException();
+
+        Scanner input1 = new Scanner(f);
+        CheckSaveSize(input1);
+
+        Scanner input = new Scanner(f);
         StringToSave(input);
         LoadHistory(turnIndex);
         System.out.println("成功加载：" + path);
         view.initiateChessComponent(model);
         view.repaint();
 
+    }
+
+    private void CheckSaveSize(Scanner input) throws WrongChessBoardSizeException {
+        int m = 0;
+        while (input.hasNext()){
+            int n = input.nextLine().length();
+            System.out.println(n + " " + m);
+            if (n != 0 && n != 3*7) throw new WrongChessBoardSizeException();
+            if (n==0){
+                if (m != 9) throw new WrongChessBoardSizeException();
+                else m = 0;
+            }
+            else m += 1;
+        }
+
+        if (m != 8) throw new WrongChessBoardSizeException();
     }
 
     public void Save(String path) throws IOException {
@@ -260,7 +283,7 @@ public class GameController implements GameListener {
         System.out.println("成功保存在" + path);
     }
 
-    public void StringToSave(Scanner input) throws SaveBrokenException {
+    public void StringToSave(Scanner input) throws WrongChessException {
         ArrayList<Cell[][]> result = new ArrayList<>();
 
         while (input.hasNext()){
@@ -269,7 +292,7 @@ public class GameController implements GameListener {
                 for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
                     int id = input.nextInt();
                     g[i][j] = new Cell();
-                    if (id % 20 > 8 || id < 0 || id > 28) throw new SaveBrokenException();
+                    if (id % 20 > 8 || id < 0 || id > 28) throw new WrongChessException();
                     if (id != 0){
                         g[i][j].setPiece(new ChessPiece(PlayerColor.values()[id / 20], ChessPiece.PieceType.values()[id % 20]));
                     }
@@ -280,8 +303,9 @@ public class GameController implements GameListener {
 
         history = result;
 
-        currentPlayer = PlayerColor.values()[(history.size() + 1) % 2];
         turnIndex = history.size() - 1;
+        currentPlayer = PlayerColor.values()[turnIndex % 2];
+
     }
 
     public String StringToSave(String Savetext){
@@ -295,8 +319,11 @@ public class GameController implements GameListener {
         for (Cell[][] time_slice: history){
             for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
                 for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
-                    if (time_slice[i][j].getPiece() == null) result.append("0");
-                    else result.append(time_slice[i][j].getPiece().getType().ordinal() + 20*time_slice[i][j].getPiece().getOwner().ordinal());
+                    if (time_slice[i][j].getPiece() == null) result.append("00");
+                    else {
+                        int id = time_slice[i][j].getPiece().getType().ordinal() + 20*time_slice[i][j].getPiece().getOwner().ordinal();
+                        result.append("%02d".formatted(id));
+                    }
 
                     result.append(' ');
                 }
