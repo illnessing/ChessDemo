@@ -83,6 +83,7 @@ public class SaveFrame extends JFrame {
 		} catch (IOException ex) {
 			throw new RuntimeException(ex);
 		}
+		this.dispose();
 	}
 	private void addOverride() {
 		JButton button = new JButton("Override");
