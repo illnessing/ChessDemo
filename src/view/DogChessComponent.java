@@ -3,8 +3,11 @@ package view;
 
 import model.PlayerColor;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * This is the equivalent of the ChessPiece class,
@@ -31,6 +34,25 @@ public class DogChessComponent extends ChessComponent {
 		if (isSelected()) { // Highlights the model if selected.
 			g.setColor(Color.RED);
 			g.drawOval(2, 2, getWidth()-4, getHeight()-4);
+		}
+		//画图片
+		if(owner.getColor()==Color.blue) {
+			Image image = null;
+			try {
+				image = ImageIO.read(new File("./resource/image/BDog.png"));
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+			g.drawImage(image, 6, 4, getWidth()-12, getHeight()-12, null);
+		}
+		else{
+			Image image = null;
+			try {
+				image = ImageIO.read(new File("./resource/image/RDog.png"));
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+			g.drawImage(image, 6, 4 , getWidth()-12, getHeight()-12, null);
 		}
 	}
 }

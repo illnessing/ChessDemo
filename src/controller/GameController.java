@@ -39,6 +39,9 @@ public class GameController implements GameListener {
     private int turnIndex;
 
     private int winID;
+    public ChessboardComponent getView() {
+        return view;
+    }
 
     public GameController(ChessboardComponent view, Chessboard model) {
         this.view = view;

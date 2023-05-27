@@ -4,9 +4,12 @@ package view;
 import controller.GameController;
 import model.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -19,6 +22,7 @@ import static model.Constant.CHESSBOARD_ROW_SIZE;
  * This class represents the checkerboard component object on the panel
  */
 public class ChessboardComponent extends JComponent {
+
 	private final CellComponent[][] gridComponents = new CellComponent[CHESSBOARD_ROW_SIZE.getNum()][CHESSBOARD_COL_SIZE.getNum()];
 	private final int CHESS_SIZE;
 	private final Set<ChessboardPoint> riverCell = new HashSet<>();
@@ -38,6 +42,9 @@ public class ChessboardComponent extends JComponent {
 		System.out.printf("chessboard width, height = [%d : %d], chess size = %d\n", width, height, CHESS_SIZE);
 
 		initiateGridComponents();
+	}
+	public CellComponent[][] getGridComponents() {
+		return gridComponents;
 	}
 
 

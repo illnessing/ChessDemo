@@ -11,7 +11,7 @@ public class Main {
         SwingUtilities.invokeLater(() -> {
             StartFrame startFrame = new StartFrame(300, 700);
             //1.把图片添加到标签里（把标签的大小设为和图片大小相同），把标签放在分层面板的最底层；
-            ImageIcon bg=new ImageIcon("./resource/background.png");
+            ImageIcon bg=new ImageIcon("./resource/image/2.png");
             JLabel label=new JLabel(bg);
             label.setSize(300,700);
             startFrame.getLayeredPane().add(label,new Integer(Integer.MIN_VALUE));

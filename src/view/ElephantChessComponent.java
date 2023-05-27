@@ -41,7 +41,7 @@ public class ElephantChessComponent extends ChessComponent {
         if(owner.getColor()==Color.blue) {
             Image image = null;
             try {
-                image = ImageIO.read(new File("./resource/Elephant-blue.png"));
+                image = ImageIO.read(new File("./resource/image/BElephant.png"));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -50,7 +50,7 @@ public class ElephantChessComponent extends ChessComponent {
         else{
             Image image = null;
             try {
-                image = ImageIO.read(new File("./resource/Elephant-red.png"));
+                image = ImageIO.read(new File("./resource/image/RElephant.png"));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

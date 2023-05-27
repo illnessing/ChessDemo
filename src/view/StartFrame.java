@@ -2,12 +2,20 @@ package view;
 
 import controller.GameController;
 import model.Chessboard;
+import model.ChessboardPoint;
 import model.PlayerColor;
 import Exception.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+
+import static model.Constant.CHESSBOARD_COL_SIZE;
+import static model.Constant.CHESSBOARD_ROW_SIZE;
 
 /**
  * 这个类表示游戏过程中的整个游戏界面，是一切的载体
@@ -16,6 +24,10 @@ public class StartFrame extends JFrame {
 	//    public final Dimension FRAME_SIZE ;
 	private final int WIDTH;
 	private final int HEIGTH;
+	private final Set<ChessboardPoint> riverCell = new HashSet<>();
+	private final Set<ChessboardPoint> trapCell = new HashSet<>();
+	private final Set<ChessboardPoint> blueDenCell = new HashSet<>();
+	private final Set<ChessboardPoint> redDenCell = new HashSet<>();
 
 	private final int ONE_CHESS_SIZE;
 	private ChessboardComponent chessboardComponent;
@@ -62,12 +74,13 @@ public class StartFrame extends JFrame {
 		button.setSize(200, 60);
 		button.setFont(new Font("Rockwell", Font.BOLD, 20));
 		add(button);
+
 		button.addActionListener(e -> {
 			SwingUtilities.invokeLater(() -> {
 				ChessGameFrame mainFrame = new ChessGameFrame(1100, 810);
 				GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
 				//1.把图片添加到标签里（把标签的大小设为和图片大小相同），把标签放在分层面板的最底层；
-				ImageIcon bg=new ImageIcon("./resource/background.png");
+				ImageIcon bg=new ImageIcon("./resource/image/3.png");
 				JLabel label=new JLabel(bg);
 				label.setSize(1100,810);
 				mainFrame.getLayeredPane().add(label,new Integer(Integer.MIN_VALUE));
@@ -78,6 +91,30 @@ public class StartFrame extends JFrame {
 				mainFrame.setLocationRelativeTo(null);
 				mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				mainFrame.setVisible(true);
+
+//				CellComponent[][] gridComponents = gameController.getView().getGridComponents();
+//
+//				for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
+//					for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
+//						ChessboardPoint temp = new ChessboardPoint(i, j);
+//						if (riverCell.contains(temp)) {
+//
+//						} else if (trapCell.contains(temp)) {
+//
+//						} else if (blueDenCell.contains(temp) || redDenCell.contains(temp)) {
+//
+//						} else {
+//					Graphics graphics = gridComponents[i][j].getGraphics();
+//					Image image = null;
+//					try {
+//						image = ImageIO.read(new File("./resource/image/BackGround.png"));
+//					} catch (IOException h) {
+//						throw new RuntimeException(h);
+//					}
+//					graphics.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+//						}
+//					}
+//				}
 			});
 			this.dispose();
 		});
