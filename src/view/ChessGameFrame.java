@@ -1,5 +1,7 @@
 package view;
 
+import controller.GameController;
+import model.Chessboard;
 import model.PlayerColor;
 import Exception.*;
 
@@ -103,7 +105,7 @@ public class ChessGameFrame extends JFrame {
         });
     }
 
-
+//打开读档界面
     private void addLoadButton() {
         JButton button = new JButton("Load");
         button.setLocation(HEIGTH, HEIGTH / 10 + 360);
@@ -112,30 +114,13 @@ public class ChessGameFrame extends JFrame {
         add(button);
 
         button.addActionListener(e -> {
-            try {
-                chessboardComponent.gameController.Load("./resource/2.txt");
-                PlayerColor playerColor = chessboardComponent.gameController.getCurrentPlayer();
-                ChessGameFrame.statusLabel.setText("Player: "+playerColor.toString()+"  Turn: "+
-                        chessboardComponent.gameController.getTurnIndex());
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            } catch (WrongChessException ex) {
-                JOptionPane.showMessageDialog(this, "Save Broken!");
-            } catch (NoFileThereException ex) {
-                throw new RuntimeException(ex);
-            } catch (WrongFormatException ex) {
-                throw new RuntimeException(ex);
-            } catch (WrongChessBoardSizeException ex) {
-                throw new RuntimeException(ex);
-            }
+                LoadFrame loadFrame = new LoadFrame(300, 900,chessboardComponent);
+                loadFrame.setVisible(true);
         });
-//        button.addActionListener(e -> {
-//            System.out.println("Click load");
-//            String path = JOptionPane.showInputDialog(this,"Input Path here");
-//            gameController.loadGameFromFile(path);
-//        });
+
     }
 
+//打开保存界面
     private void addSaveButton() {
         JButton button = new JButton("Save");
         button.setLocation(HEIGTH, HEIGTH / 10 + 480);
@@ -143,12 +128,9 @@ public class ChessGameFrame extends JFrame {
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
         button.addActionListener(e -> {
-            try {
-                chessboardComponent.gameController.Save("./resource/2.txt");
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+            SaveFrame saveFrame = new SaveFrame(300, 900,chessboardComponent);
+            saveFrame.setVisible(true);
 
-            }
         });
 
 
@@ -172,5 +154,4 @@ public class ChessGameFrame extends JFrame {
         });
 
     }
-
 }

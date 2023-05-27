@@ -24,7 +24,7 @@ public class StartFrame extends JFrame {
 
 
 	public StartFrame(int width, int height) {
-		setTitle("2023 CS109 Project Demo"); //设置标题
+		setTitle("Initial Interface"); //设置标题
 		this.WIDTH = width;
 		this.HEIGTH = height;
 		this.ONE_CHESS_SIZE = (HEIGTH * 4 / 5) / 9;
@@ -39,7 +39,14 @@ public class StartFrame extends JFrame {
 		addLabel();
 		addStartButton();
 		addExitButton();
-		addLoadButton();
+//		addLoadButton();
+	}
+	public ChessboardComponent getChessboardComponent() {
+		return chessboardComponent;
+	}
+
+	public void setChessboardComponent(ChessboardComponent chessboardComponent) {
+		this.chessboardComponent = chessboardComponent;
 	}
 	private void addLabel() {
 		statusLabel = new JLabel("Hello World!");
@@ -50,7 +57,7 @@ public class StartFrame extends JFrame {
 	}
 
 	private void addStartButton() {
-		JButton button = new JButton("Strat");
+		JButton button = new JButton("New Game");
 		button.setLocation(50, HEIGTH / 10 + 120);
 		button.setSize(200, 60);
 		button.setFont(new Font("Rockwell", Font.BOLD, 20));
@@ -72,13 +79,50 @@ public class StartFrame extends JFrame {
 				mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				mainFrame.setVisible(true);
 			});
-			this.setVisible(false);
+			this.dispose();
 		});
-
 	}
+//	private void addLoadButton() {
+//		JButton button = new JButton("Continue");
+//		button.setLocation(50, HEIGTH / 10 + 240);
+//		button.setSize(200, 60);
+//		button.setFont(new Font("Rockwell", Font.BOLD, 20));
+//		add(button);
+//
+//		button.addActionListener(e -> {
+//
+//			SwingUtilities.invokeLater(() -> {
+//				ChessGameFrame mainFrame = new ChessGameFrame(1100, 810);
+////				GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
+//				mainFrame.setVisible(true);
+//			});
+//
+//			try {
+//				chessboardComponent.gameController.Load("./resource/2.txt");
+//				PlayerColor playerColor = chessboardComponent.gameController.getCurrentPlayer();
+//				ChessGameFrame.statusLabel.setText("Player: "+playerColor.toString()+"  Turn: "+
+//						chessboardComponent.gameController.getTurnIndex());
+//			} catch (IOException ex) {
+//				throw new RuntimeException(ex);
+//			} catch (WrongChessException ex) {
+//				JOptionPane.showMessageDialog(this, "Save Broken!");
+//			} catch (NoFileThereException ex) {
+//				JOptionPane.showMessageDialog(this, "No File There!");
+//			} catch (WrongFormatException ex) {
+//				JOptionPane.showMessageDialog(this, "Wrong Format!!");
+//			} catch (WrongChessBoardSizeException ex) {
+//				JOptionPane.showMessageDialog(this, "Wrong Chess Board Size!");
+//			}
+//		});
+////        button.addActionListener(e -> {
+////            System.out.println("Click load");
+////            String path = JOptionPane.showInputDialog(this,"Input Path here");
+////            gameController.loadGameFromFile(path);
+////        });
+//	}
 	private void addExitButton() {
 		JButton button = new JButton("Exit");
-		button.setLocation(50, HEIGTH / 10 + 240);
+		button.setLocation(50, HEIGTH / 10 + 360);
 		button.setSize(200, 60);
 		button.setFont(new Font("Rockwell", Font.BOLD, 20));
 //		button.setContentAreaFilled(false);
@@ -87,44 +131,6 @@ public class StartFrame extends JFrame {
 			System.exit(0);
 		});
 
-	}
-	private void addLoadButton() {
-		JButton button = new JButton("Load");
-		button.setLocation(50, HEIGTH / 10 + 360);
-		button.setSize(200, 60);
-		button.setFont(new Font("Rockwell", Font.BOLD, 20));
-		add(button);
-
-		button.addActionListener(e -> {
-
-			SwingUtilities.invokeLater(() -> {
-				ChessGameFrame mainFrame = new ChessGameFrame(1100, 810);
-				GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
-				mainFrame.setVisible(true);
-			});
-
-			try {
-				chessboardComponent.gameController.Load("./resource/2.txt");
-				PlayerColor playerColor = chessboardComponent.gameController.getCurrentPlayer();
-				ChessGameFrame.statusLabel.setText("Player: "+playerColor.toString()+"  Turn: "+
-						chessboardComponent.gameController.getTurnIndex());
-			} catch (IOException ex) {
-				throw new RuntimeException(ex);
-			} catch (WrongChessException ex) {
-				JOptionPane.showMessageDialog(this, "Save Broken!");
-			} catch (NoFileThereException ex) {
-				throw new RuntimeException(ex);
-			} catch (WrongFormatException ex) {
-				throw new RuntimeException(ex);
-			} catch (WrongChessBoardSizeException ex) {
-				throw new RuntimeException(ex);
-			}
-		});
-//        button.addActionListener(e -> {
-//            System.out.println("Click load");
-//            String path = JOptionPane.showInputDialog(this,"Input Path here");
-//            gameController.loadGameFromFile(path);
-//        });
 	}
 
 }
