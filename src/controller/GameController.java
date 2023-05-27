@@ -270,8 +270,8 @@ public class GameController implements GameListener {
             }
             else m += 1;
         }
-
-        if (m != 8) throw new WrongChessBoardSizeException();
+        System.out.println( m);
+        if (m != 9 && m != 0) throw new WrongChessBoardSizeException();
     }
 
     public void Save(String path) throws IOException {
