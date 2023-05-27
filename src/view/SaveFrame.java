@@ -36,36 +36,35 @@ public class SaveFrame extends JFrame {
 
 
 
-		addLabel();
+
 		addCreateNewSave();
 		addExitButton();
 		addOverride();
 	}
 
-	private void addLabel() {
-		statusLabel = new JLabel("Save Here");
-		statusLabel.setLocation(87, HEIGTH / 10);
-		statusLabel.setSize(200, 60);
-		statusLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
-		add(statusLabel);
-	}
 	public void addCreateNewSave() {
-//		创建输入窗口
-
-		textField.setLocation(50, HEIGTH / 10 + 240);
-		textField.setSize(200, 60);
-		textField.setEditable(true); // 设置输入框允许编辑
-		textField.setColumns(11); // 设置输入框的长度为11个字符
-		add(textField); // 在面板上添加单行输入框
-//		创建按钮
-		JButton button = new JButton("Create a new slot");
-		button.setLocation(50, HEIGTH / 10 + 120);
-		button.setSize(200, 60);
+		//		创建按钮
+		JButton button = new JButton("Create a new save");
+		button.setLocation(50, 10 );
+		button.setSize(300, 60);
 		button.setFont(new Font("Rockwell", Font.BOLD, 20));
 		add(button);
 		button.addActionListener(e -> {
 			onButtonOk();
 		});
+//		提示的文字
+		statusLabel = new JLabel("Input a name");
+		statusLabel.setLocation(87,10+120);
+		statusLabel.setSize(200, 60);
+		statusLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
+		add(statusLabel);
+//		创建输入窗口
+		textField.setLocation(50, 10 + 240);
+		textField.setSize(200, 60);
+		textField.setEditable(true); // 设置输入框允许编辑
+		textField.setColumns(11); // 设置输入框的长度为11个字符
+		add(textField); // 在面板上添加单行输入框
+
 	}
 	private void onButtonOk(){
 		String name = textField.getText();
@@ -86,9 +85,9 @@ public class SaveFrame extends JFrame {
 		this.dispose();
 	}
 	private void addOverride() {
-		JButton button = new JButton("Override");
-		button.setLocation(50, HEIGTH / 10 + 360);
-		button.setSize(200, 60);
+		JButton button = new JButton("Override a existing save");
+		button.setLocation(50, 10 + 360);
+		button.setSize(300, 60);
 		button.setFont(new Font("Rockwell", Font.BOLD, 20));
 		add(button);
 		button.addActionListener(e -> {
@@ -111,12 +110,13 @@ public class SaveFrame extends JFrame {
 				}
 				System.out.println("path: "+path);
 			}
+			this.dispose();
 		});
 	}
 
 	private void addExitButton() {
-		JButton button = new JButton("Exit");
-		button.setLocation(50, HEIGTH / 10 + 240);
+		JButton button = new JButton("Back");
+		button.setLocation(50,  10 + 480);
 		button.setSize(200, 60);
 		button.setFont(new Font("Rockwell", Font.BOLD, 20));
 //		button.setContentAreaFilled(false);

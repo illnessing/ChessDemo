@@ -156,7 +156,7 @@ public class ChessGameFrame extends JFrame {
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
         button.addActionListener(e -> {
-            SaveFrame saveFrame = new SaveFrame(300, 600,chessboardComponent);
+            SaveFrame saveFrame = new SaveFrame(400, 700,chessboardComponent);
             saveFrame.setVisible(true);
 
         });
