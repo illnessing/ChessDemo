@@ -120,6 +120,7 @@ public class StartFrame extends JFrame {
 ////            gameController.loadGameFromFile(path);
 ////        });
 //	}
+
 	private void addExitButton() {
 		JButton button = new JButton("Exit");
 		button.setLocation(50, HEIGTH / 10 + 360);
@@ -132,5 +133,6 @@ public class StartFrame extends JFrame {
 		});
 
 	}
+
 
 }

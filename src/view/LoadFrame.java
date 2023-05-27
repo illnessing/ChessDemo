@@ -37,9 +37,6 @@ public class LoadFrame extends JFrame {
 
 		addLabel();
 		addLoadButton1();
-		addLoadButton2();
-		addLoadButton3();
-		addLoadButton4();
 		addExitButton();
 
 	}
@@ -83,105 +80,7 @@ public class LoadFrame extends JFrame {
 //            gameController.loadGameFromFile(path);
 //        });
 	}
-	private void addLoadButton2() {
-		JButton button = new JButton("Slot 2");
-		button.setLocation(50, HEIGTH / 10 + 240);
-		button.setSize(200, 60);
-		button.setFont(new Font("Rockwell", Font.BOLD, 20));
-		add(button);
-		button.addActionListener(e -> {
-			try {
-				chessboardComponent.gameController.Load("./resource/2.txt");
-				PlayerColor playerColor = chessboardComponent.gameController.getCurrentPlayer();
-				ChessGameFrame.statusLabel.setText("Player: "+playerColor.toString()+"  Turn: "+
-						chessboardComponent.gameController.getTurnIndex());
-			} catch (IOException ex) {
-				throw new RuntimeException(ex);
-			} catch (WrongChessException ex) {
-				JOptionPane.showMessageDialog(this, "Save Broken!");
-			} catch (NoFileThereException ex) {
-				JOptionPane.showMessageDialog(this, "No File There!");
-			} catch (WrongFormatException ex) {
-				JOptionPane.showMessageDialog(this, "Wrong Format!!");
-			} catch (WrongChessBoardSizeException ex) {
-				JOptionPane.showMessageDialog(this, "Wrong Chess Board Size!");
-			}
-			this.dispose();
-		});
 
-
-//        button.addActionListener(e -> {
-//            System.out.println("Click load");
-//            String path = JOptionPane.showInputDialog(this,"Input Path here");
-//            gameController.loadGameFromFile(path);
-//        });
-	}
-	private void addLoadButton3() {
-		JButton button = new JButton("Slot 3");
-		button.setLocation(50, HEIGTH / 10 + 360);
-		button.setSize(200, 60);
-		button.setFont(new Font("Rockwell", Font.BOLD, 20));
-		add(button);
-		button.addActionListener(e -> {
-			try {
-				chessboardComponent.gameController.Load("./resource/3.txt");
-				PlayerColor playerColor = chessboardComponent.gameController.getCurrentPlayer();
-				ChessGameFrame.statusLabel.setText("Player: "+playerColor.toString()+"  Turn: "+
-						chessboardComponent.gameController.getTurnIndex());
-			} catch (IOException ex) {
-				throw new RuntimeException(ex);
-			} catch (WrongChessException ex) {
-				JOptionPane.showMessageDialog(this, "Save Broken!");
-			} catch (NoFileThereException ex) {
-				JOptionPane.showMessageDialog(this, "No File There!");
-			} catch (WrongFormatException ex) {
-				JOptionPane.showMessageDialog(this, "Wrong Format!!");
-			} catch (WrongChessBoardSizeException ex) {
-				JOptionPane.showMessageDialog(this, "Wrong Chess Board Size!");
-			}
-			this.dispose();
-		});
-
-
-//        button.addActionListener(e -> {
-//            System.out.println("Click load");
-//            String path = JOptionPane.showInputDialog(this,"Input Path here");
-//            gameController.loadGameFromFile(path);
-//        });
-	}
-	private void addLoadButton4() {
-		JButton button = new JButton("Slot 4");
-		button.setLocation(50, HEIGTH / 10 + 480);
-		button.setSize(200, 60);
-		button.setFont(new Font("Rockwell", Font.BOLD, 20));
-		add(button);
-		button.addActionListener(e -> {
-			try {
-				chessboardComponent.gameController.Load("./resource/4.txt");
-				PlayerColor playerColor = chessboardComponent.gameController.getCurrentPlayer();
-				ChessGameFrame.statusLabel.setText("Player: "+playerColor.toString()+"  Turn: "+
-						chessboardComponent.gameController.getTurnIndex());
-			} catch (IOException ex) {
-				throw new RuntimeException(ex);
-			} catch (WrongChessException ex) {
-				JOptionPane.showMessageDialog(this, "Save Broken!");
-			} catch (NoFileThereException ex) {
-				JOptionPane.showMessageDialog(this, "No File There!");
-			} catch (WrongFormatException ex) {
-				JOptionPane.showMessageDialog(this, "Wrong Format!!");
-			} catch (WrongChessBoardSizeException ex) {
-				JOptionPane.showMessageDialog(this, "Wrong Chess Board Size!");
-			}
-			this.dispose();
-		});
-
-
-//        button.addActionListener(e -> {
-//            System.out.println("Click load");
-//            String path = JOptionPane.showInputDialog(this,"Input Path here");
-//            gameController.loadGameFromFile(path);
-//        });
-	}
 	private void addExitButton() {
 		JButton button = new JButton("Exit");
 		button.setLocation(50, HEIGTH / 10 + 600);

@@ -6,6 +6,7 @@ import model.PlayerColor;
 import Exception.*;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.io.IOException;
 
@@ -114,8 +115,35 @@ public class ChessGameFrame extends JFrame {
         add(button);
 
         button.addActionListener(e -> {
-                LoadFrame loadFrame = new LoadFrame(300, 900,chessboardComponent);
-                loadFrame.setVisible(true);
+            FileSystemView fsv = FileSystemView.getFileSystemView();
+
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setCurrentDirectory(fsv.createFileObject("./resource"));
+            fileChooser.setDialogTitle("请选择要上传的文件...");
+            fileChooser.setApproveButtonText("确定");
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+            int result = fileChooser.showOpenDialog(null);
+
+            if (JFileChooser.APPROVE_OPTION == result) {
+                String path=fileChooser.getSelectedFile().getPath();
+                try {
+                    chessboardComponent.gameController.Load(path);
+                    PlayerColor playerColor = chessboardComponent.gameController.getCurrentPlayer();
+                    ChessGameFrame.statusLabel.setText("Player: "+playerColor.toString()+"  Turn: "+
+                            chessboardComponent.gameController.getTurnIndex());
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (WrongChessException ex) {
+                    JOptionPane.showMessageDialog(this, "Save Broken!");
+                } catch (NoFileThereException ex) {
+                    JOptionPane.showMessageDialog(this, "No File There!");
+                } catch (WrongFormatException ex) {
+                    JOptionPane.showMessageDialog(this, "Wrong Format!!");
+                } catch (WrongChessBoardSizeException ex) {
+                    JOptionPane.showMessageDialog(this, "Wrong Chess Board Size!");
+                }
+            }
         });
 
     }
@@ -128,17 +156,10 @@ public class ChessGameFrame extends JFrame {
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
         button.addActionListener(e -> {
-            SaveFrame saveFrame = new SaveFrame(300, 900,chessboardComponent);
+            SaveFrame saveFrame = new SaveFrame(300, 600,chessboardComponent);
             saveFrame.setVisible(true);
 
         });
-
-
-//        button.addActionListener(e -> {
-//            System.out.println("Click load");
-//            String path = JOptionPane.showInputDialog(this,"Input Path here");
-//            gameController.loadGameFromFile(path);
-//        });
     }
 
     private void addRestartButton() {
