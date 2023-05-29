@@ -177,7 +177,7 @@ public class GameController implements GameListener {
         }
     }
 
-    private void AfterPlayerAction(){
+    private void AfterPlayerAction() {
         win();
         selectedPoint = null;
         swapColor();
@@ -189,6 +189,12 @@ public class GameController implements GameListener {
 
         history.add(model.getClonedGrid());
         turnIndex += 1;
+
+        try{
+            Save("./resource/auto_save.txt");
+        } catch (IOException e) {
+            System.out.println("自动存档失败 ");
+        }
     }
 
     /// <summary>
