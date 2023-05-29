@@ -332,8 +332,25 @@ public class ChessboardComponent extends JComponent {
 				}
 			}
 
+
 //		检测并显示是否有胜利的一方
 			showWin(gameController.checkWin());
+		}
+
+		ChessboardPoint lastSrc = gameController.getLastStepSrc();
+		if (lastSrc != null){
+			Graphics graphics = gridComponents[lastSrc.getRow()][lastSrc.getCol()].getGraphics();
+			graphics.setColor(Color.ORANGE);
+			graphics.drawRect(gap, gap, 66, 66);
+			graphics.dispose();
+		}
+
+		ChessboardPoint lastDest = gameController.getLastStepDest();
+		if (lastDest != null){
+			Graphics graphics = gridComponents[lastDest.getRow()][lastDest.getCol()].getGraphics();
+			graphics.setColor(Color.ORANGE);
+			graphics.drawRect(gap, gap, 66, 66);
+			graphics.dispose();
 		}
 	}
 }

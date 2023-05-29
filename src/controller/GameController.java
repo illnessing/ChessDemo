@@ -369,6 +369,7 @@ public class GameController implements GameListener {
             for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
                 if (
                         history.get(turnIndex)[i][j].getPiece() != null &&(
+                        history.get(turnIndex - 1)[i][j].getPiece() == null ||
                         history.get(turnIndex - 1)[i][j].getPiece().getOwner() != history.get(turnIndex)[i][j].getPiece().getOwner() ||
                         history.get(turnIndex - 1)[i][j].getPiece().getType() != history.get(turnIndex)[i][j].getPiece().getType())
                 )
