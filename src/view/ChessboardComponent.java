@@ -188,18 +188,22 @@ public class ChessboardComponent extends JComponent {
 
 	@Override
 	protected void processMouseEvent(MouseEvent e) {
+
 		PlayerColor playerColor = gameController.getCurrentPlayer();
 		ChessGameFrame.statusLabel.setText("Player: "+playerColor.toString()+"	Turn: "+ gameController.getTurnIndex());
+
 //		若鼠标点击（按下）
 		if (e.getID() == MouseEvent.MOUSE_PRESSED) {
 			JComponent clickedComponent = (JComponent) getComponentAt(e.getX(), e.getY());
 //			int x = onlyGetChessboardPoint(e.getPoint()).getRow();
 //			int y = onlyGetChessboardPoint(e.getPoint()).getCol();
 //			CellComponent clickedCellComponent = gridComponents[x][y];
+
 //			若选中空白格子
 			if (clickedComponent.getComponentCount() == 0) {
 				System.out.print("None chess here and ");
 				gameController.onPlayerClickCell(getChessboardPoint(e.getPoint()), (CellComponent) clickedComponent);
+
 //				消除带有标记的，若点击空白格（移动）
 				if (gameController.getSelectedPoint() == null) {
 					for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
@@ -230,16 +234,19 @@ public class ChessboardComponent extends JComponent {
 //							消除标记
 								flag[i][j] = false;
 							}
+
 						}
 					}
 				}
 			}
+
 //			若选中的格子有棋子
 			else {
 				System.out.print("One chess here and ");
 				gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (ChessComponent) clickedComponent.getComponents()[0]);
 				ChessboardPoint point = onlyGetChessboardPoint(e.getPoint());
 				ChessComponent chess = (ChessComponent) getGridComponentAt(point).getComponents()[0];
+
 //				消除带有标记的，若点击棋子
 				if (gameController.getSelectedPoint() == null) {
 					for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
@@ -270,9 +277,11 @@ public class ChessboardComponent extends JComponent {
 //							消除标记
 								flag[i][j] = false;
 							}
+
 						}
 					}
 				}
+
 				//涂色并标记
 				if (chess.getOwner() == playerColor) {
 					if (chess.isSelected()) {
@@ -297,6 +306,7 @@ public class ChessboardComponent extends JComponent {
 					}
 				}
 			}
+
 //		检测并显示是否有胜利的一方
 			showWin(gameController.checkWin());
 		}
