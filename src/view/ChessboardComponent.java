@@ -340,8 +340,8 @@ public class ChessboardComponent extends JComponent {
 		ChessboardPoint lastSrc = gameController.getLastStepSrc();
 		if (lastSrc != null){
 			Graphics graphics = gridComponents[lastSrc.getRow()][lastSrc.getCol()].getGraphics();
-			graphics.setColor(Color.ORANGE);
-			graphics.drawRect(gap, gap, 66, 66);
+			graphics.setColor(Color.GREEN);
+			graphics.fillRect(gap, gap, 66, 66);
 			graphics.dispose();
 		}
 

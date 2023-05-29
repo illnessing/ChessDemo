@@ -34,9 +34,6 @@ public class SaveFrame extends JFrame {
 		setDefaultCloseOperation(2); //设置程序关闭按键，如果点击右上方的叉就游戏全部关闭了
 		setLayout(null);
 
-
-
-
 		addCreateNewSave();
 		addExitButton();
 		addOverride();
@@ -45,7 +42,7 @@ public class SaveFrame extends JFrame {
 	public void addCreateNewSave() {
 		//		创建按钮
 		JButton button = new JButton("Create a new save");
-		button.setLocation(50, 10 );
+		button.setLocation(50, 30 );
 		button.setSize(300, 60);
 		button.setFont(new Font("Rockwell", Font.BOLD, 20));
 		add(button);
@@ -54,13 +51,13 @@ public class SaveFrame extends JFrame {
 		});
 //		提示的文字
 		statusLabel = new JLabel("Input a name");
-		statusLabel.setLocation(87,10+120);
-		statusLabel.setSize(200, 60);
+		statusLabel.setLocation(134,10+120);
+		statusLabel.setSize(300, 60);
 		statusLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
 		add(statusLabel);
 //		创建输入窗口
 		textField.setLocation(50, 10 + 240);
-		textField.setSize(200, 60);
+		textField.setSize(300, 60);
 		textField.setEditable(true); // 设置输入框允许编辑
 		textField.setColumns(11); // 设置输入框的长度为11个字符
 		add(textField); // 在面板上添加单行输入框
@@ -117,7 +114,7 @@ public class SaveFrame extends JFrame {
 	private void addExitButton() {
 		JButton button = new JButton("Back");
 		button.setLocation(50,  10 + 480);
-		button.setSize(200, 60);
+		button.setSize(300, 60);
 		button.setFont(new Font("Rockwell", Font.BOLD, 20));
 //		button.setContentAreaFilled(false);
 		add(button);

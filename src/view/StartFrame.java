@@ -64,10 +64,11 @@ public class StartFrame extends JFrame {
 	}
 	private void addLabel() {
 
-		statusLabel = new JLabel("Hello World!");
-		statusLabel.setLocation(87, HEIGTH / 10);
+		statusLabel = new JLabel("Jungle");
+		statusLabel.setLocation(60, HEIGTH / 10);
 		statusLabel.setSize(200, 60);
-		statusLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
+		statusLabel.setFont(new Font("Rockwell", Font.BOLD, 50));
+		statusLabel.setForeground(Color.ORANGE);
 		add(statusLabel);
 
 	}
@@ -77,7 +78,7 @@ public class StartFrame extends JFrame {
 		JButton button = new JButton("New Game");
 		button.setLocation(50, HEIGTH / 10 + 120);
 		button.setSize(200, 60);
-		button.setFont(new Font("Rockwell", Font.BOLD, 20));
+		button.setFont(new Font("Rockwell", Font.BOLD, 30));
 		add(button);
 
 		button.addActionListener(e -> {
@@ -135,10 +136,10 @@ public class StartFrame extends JFrame {
 	}
 	//打开读档界面
 	private void addLoadButton() {
-		JButton button = new JButton("Load");
+		JButton button = new JButton("Continue");
 		button.setLocation(50, HEIGTH / 10 + 240);
 		button.setSize(200, 60);
-		button.setFont(new Font("Rockwell", Font.BOLD, 20));
+		button.setFont(new Font("Rockwell", Font.BOLD, 30));
 		add(button);
 
 		button.addActionListener(e -> {
@@ -203,7 +204,7 @@ public class StartFrame extends JFrame {
 		JButton button = new JButton("Exit");
 		button.setLocation(50, HEIGTH / 10 + 360);
 		button.setSize(200, 60);
-		button.setFont(new Font("Rockwell", Font.BOLD, 20));
+		button.setFont(new Font("Rockwell", Font.BOLD, 30));
 
 //		button.setContentAreaFilled(false);
 		add(button);
