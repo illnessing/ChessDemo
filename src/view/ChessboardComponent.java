@@ -31,6 +31,7 @@ public class ChessboardComponent extends JComponent {
 	private final Set<ChessboardPoint> redDenCell = new HashSet<>();
 	boolean[][] flag = new boolean[CHESSBOARD_ROW_SIZE.getNum()][CHESSBOARD_COL_SIZE.getNum()];
 	protected GameController gameController;
+	int gap = 4;
 
 	public ChessboardComponent(int chessSize) {
 		CHESS_SIZE = chessSize;
@@ -131,6 +132,30 @@ public class ChessboardComponent extends JComponent {
 				gridComponents[i][j] = cell;
 			}
 		}
+
+//		for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
+//					for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
+//						ChessboardPoint temp = new ChessboardPoint(i, j);
+//						if (riverCell.contains(temp)) {
+//
+//						} else if (trapCell.contains(temp)) {
+//
+//						} else if (blueDenCell.contains(temp) || redDenCell.contains(temp)) {
+//
+//						} else {
+//
+//					Graphics graphics = gridComponents[i][j].getGraphics();
+//					Image image = null;
+//					try {
+//						image = ImageIO.read(new File("./resource/image/BackGround.png"));
+//					} catch (IOException h) {
+//						throw new RuntimeException(h);
+//					}
+//					graphics.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+//
+//						}
+//					}
+//				}
 	}
 
 	public void registerController(GameController gameController) {
@@ -213,22 +238,22 @@ public class ChessboardComponent extends JComponent {
 								if (riverCell.contains(temp)) {
 									Graphics graphics = gridComponents[i][j].getGraphics();
 									graphics.setColor(Color.CYAN);
-									graphics.drawRect(5, 5, 66, 66);
+									graphics.drawRect(gap, gap, 66, 66);
 									graphics.dispose();
 								} else if (trapCell.contains(temp)) {
 									Graphics graphics = gridComponents[i][j].getGraphics();
 									graphics.setColor(Color.WHITE);
-									graphics.drawRect(5, 5, 66, 66);
+									graphics.drawRect(gap, gap, 66, 66);
 									graphics.dispose();
 								} else if (blueDenCell.contains(temp) || redDenCell.contains(temp)) {
 									Graphics graphics = gridComponents[i][j].getGraphics();
 									graphics.setColor(Color.YELLOW);
-									graphics.drawRect(5, 5, 66, 66);
+									graphics.drawRect(gap, gap, 66, 66);
 									graphics.dispose();
 								} else {
 									Graphics graphics = gridComponents[i][j].getGraphics();
 									graphics.setColor(Color.LIGHT_GRAY);
-									graphics.drawRect(5, 5, 66, 66);
+									graphics.drawRect(gap, gap, 66, 66);
 									graphics.dispose();
 								}
 //							消除标记
@@ -256,22 +281,22 @@ public class ChessboardComponent extends JComponent {
 								if (riverCell.contains(temp)) {
 									Graphics graphics = gridComponents[i][j].getGraphics();
 									graphics.setColor(Color.CYAN);
-									graphics.drawRect(5, 5, 66, 66);
+									graphics.drawRect(gap, gap, 66, 66);
 									graphics.dispose();
 								} else if (trapCell.contains(temp)) {
 									Graphics graphics = gridComponents[i][j].getGraphics();
 									graphics.setColor(Color.WHITE);
-									graphics.drawRect(5, 5, 66, 66);
+									graphics.drawRect(gap, gap, 66, 66);
 									graphics.dispose();
 								} else if (blueDenCell.contains(temp) || redDenCell.contains(temp)) {
 									Graphics graphics = gridComponents[i][j].getGraphics();
 									graphics.setColor(Color.YELLOW);
-									graphics.drawRect(5, 5, 66, 66);
+									graphics.drawRect(gap, gap, 66, 66);
 									graphics.dispose();
 								} else {
 									Graphics graphics = gridComponents[i][j].getGraphics();
 									graphics.setColor(Color.LIGHT_GRAY);
-									graphics.drawRect(5, 5, 66, 66);
+									graphics.drawRect(gap, gap, 66, 66);
 									graphics.dispose();
 								}
 //							消除标记
@@ -291,13 +316,13 @@ public class ChessboardComponent extends JComponent {
 								if (gameController.isValidCapture(onlyGetChessboardPoint(e.getPoint()), temp)) {
 									Graphics graphics = gridComponents[i][j].getGraphics();
 									graphics.setColor(Color.GREEN);
-									graphics.drawRect(5, 5, 66, 66);
+									graphics.drawRect(gap, gap, 66, 66);
 									graphics.dispose();
 									flag[i][j] = true;
 								} else if (gameController.isValidMove(onlyGetChessboardPoint(e.getPoint()), temp)) {
 									Graphics graphics = gridComponents[i][j].getGraphics();
 									graphics.setColor(Color.MAGENTA);
-									graphics.drawRect(5, 5, 66, 66);
+									graphics.drawRect(gap, gap, 66, 66);
 									graphics.dispose();
 									flag[i][j] = true;
 								}

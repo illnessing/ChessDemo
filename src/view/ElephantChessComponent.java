@@ -45,7 +45,7 @@ public class ElephantChessComponent extends ChessComponent {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            g.drawImage(image, 6, 4, getWidth()-12, getHeight()-12, null);
+            g.drawImage(image, 6, 6, getWidth()-12, getHeight()-12, null);
         }
         else{
             Image image = null;
@@ -54,7 +54,7 @@ public class ElephantChessComponent extends ChessComponent {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            g.drawImage(image, 6, 4 , getWidth()-12, getHeight()-12, null);
+            g.drawImage(image, 6, 6 , getWidth()-12, getHeight()-12, null);
         }
     }
 }

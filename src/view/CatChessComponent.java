@@ -31,7 +31,7 @@ public class CatChessComponent extends ChessComponent {
 		Font font = new Font("楷体", Font.PLAIN, getWidth() / 2);
 		g2.setFont(font);
 		g2.setColor(owner.getColor());
-		g2.drawString("猫", getWidth() / 4, getHeight() * 5 / 8); // FIXME: Use library to find the correct offset.
+//		g2.drawString("猫", getWidth() / 4, getHeight() * 5 / 8); // FIXME: Use library to find the correct offset.
 		if (isSelected()) { // Highlights the model if selected.
 			g.setColor(Color.RED);
 			g.drawOval(2, 2, getWidth()-4, getHeight()-4);
@@ -44,7 +44,7 @@ public class CatChessComponent extends ChessComponent {
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
-			g.drawImage(image, 6, 4, getWidth()-12, getHeight()-12, null);
+			g.drawImage(image, 6, 6, getWidth()-12, getHeight()-12, null);
 		}
 		else{
 			Image image = null;
@@ -53,7 +53,7 @@ public class CatChessComponent extends ChessComponent {
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
-			g.drawImage(image, 6, 4 , getWidth()-12, getHeight()-12, null);
+			g.drawImage(image, 6, 6 , getWidth()-12, getHeight()-12, null);
 		}
 	}
 }
