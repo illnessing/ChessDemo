@@ -260,6 +260,7 @@ public class GameController implements GameListener {
 
         Scanner input = new Scanner(f);
         StringToSave(input);
+
         LoadHistory(turnIndex);
         System.out.println("成功加载：" + path);
         view.initiateChessComponent(model);
@@ -348,6 +349,7 @@ public class GameController implements GameListener {
     public void LoadHistory(int index){
         model.LoadGrid(history.get(index));
         turnIndex = index;
+        selectedPoint = null;
     }
 
     public ChessboardPoint getLastStepSrc(){
