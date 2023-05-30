@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.Runnable;
 
-package com.Play;
+//package com.Play;
 
 public class PlayRunnable implements Runnable{
 	String audio;
@@ -16,6 +16,5 @@ public class PlayRunnable implements Runnable{
 	@Override
 	public void run() {
 		Play play = new Play(this.audio);
-
 	}
 }

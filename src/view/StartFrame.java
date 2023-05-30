@@ -1,5 +1,4 @@
 package view;
-
 import controller.GameController;
 import model.Chessboard;
 import model.ChessboardPoint;
@@ -12,7 +11,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-//package com.Play;
+
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -55,7 +54,7 @@ public class StartFrame extends JFrame {
 		addStartButton();
 		addExitButton();
 		addLoadButton();
-
+		Play();
 
 	}
 
@@ -219,16 +218,12 @@ public class StartFrame extends JFrame {
 		});
 
 	}
-	public void Play(String audio) {
-		this.audio = audio;
-		try {
-			Player player = new Player(new FileInputStream(this.audio));  // 创建播放器
-			System.out.println("播放音乐："+this.audio);
-			player.play();                                            // 开始播放
-		} catch (JavaLayerException e) {
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+	private static void PlayAudio(String audio) {
+		new Thread(new PlayRunnable(audio)).start();
+	}
+
+	public void Play() {
+		String audio = "./resource/music/menu1.mp3";
+		PlayAudio(audio);
 	}
 }
