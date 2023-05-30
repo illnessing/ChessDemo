@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -29,6 +30,7 @@ public class GameController implements GameListener {
     private Chessboard model;
     private ChessboardComponent view;
     private PlayerColor currentPlayer;
+    private PlayerColor startPlayer;
 
     // Record whether there is a selected piece before
     private ChessboardPoint selectedPoint;
@@ -47,6 +49,7 @@ public class GameController implements GameListener {
         this.view = view;
         this.model = model;
         this.currentPlayer = PlayerColor.BLUE;
+        this.startPlayer = PlayerColor.BLUE;
         this.winID = 0;
 
         view.registerController(this);
@@ -219,6 +222,7 @@ public class GameController implements GameListener {
         //Restart the game
         model.initialize();
         this.currentPlayer = PlayerColor.BLUE;
+        this.startPlayer = PlayerColor.BLUE;
         this.winID = 0;
         selectedPoint = null;
 
@@ -228,7 +232,7 @@ public class GameController implements GameListener {
         view.repaint();
 
         history = new ArrayList<>();
-        history.add(model.getGrid().clone());
+        history.add(model.getClonedGrid());
         turnIndex = 0;
     }
 
@@ -236,7 +240,7 @@ public class GameController implements GameListener {
         if (turnIndex <= 0) return;
         turnIndex -= 1;
         LoadHistory(turnIndex);
-        currentPlayer = PlayerColor.values()[(turnIndex) % 2];
+        currentPlayer = PlayerColor.values()[(this.startPlayer.ordinal() + turnIndex) % 2];
         view.initiateChessComponent(model);
         view.repaint();
     }
@@ -245,12 +249,12 @@ public class GameController implements GameListener {
         if (turnIndex >= history.size()-1) return;
         turnIndex += 1;
         LoadHistory(turnIndex);
-        currentPlayer = PlayerColor.values()[(turnIndex) % 2];
+        currentPlayer = PlayerColor.values()[(this.startPlayer.ordinal() + turnIndex) % 2];
         view.initiateChessComponent(model);
         view.repaint();
     }
 
-    public void Load(String path) throws IOException, WrongChessException, NoFileThereException, WrongFormatException, WrongChessBoardSizeException {
+    public void Load(String path) throws IOException, WrongChessException, NoFileThereException, WrongFormatException, WrongChessBoardSizeException, WrongPlayerException {
         if (!path.endsWith(".txt")) throw new WrongFormatException();
         File f = new File(path);
         if (!f.exists()) throw new NoFileThereException();
@@ -268,7 +272,14 @@ public class GameController implements GameListener {
 
     }
 
-    private void CheckSaveSize(Scanner input) throws WrongChessBoardSizeException {
+    private void CheckSaveSize(Scanner input) throws WrongChessBoardSizeException, WrongPlayerException {
+        try{
+            String t = input.next();
+            if (!Objects.equals(t, "A") && !Objects.equals(t, "B")) throw new WrongPlayerException();
+        } catch (Exception e) {
+            throw new WrongPlayerException();
+        }
+        input.nextLine();
         int m = 0;
         while (input.hasNext()){
             int n = input.nextLine().length();
@@ -294,6 +305,7 @@ public class GameController implements GameListener {
     }
 
     public void StringToSave(Scanner input) throws WrongChessException {
+        String t = input.next();
         ArrayList<Cell[][]> result = new ArrayList<>();
 
         while (input.hasNext()){
@@ -311,21 +323,20 @@ public class GameController implements GameListener {
             result.add(g);
         }
 
+
+        startPlayer = (t.equals("A")) ? PlayerColor.BLUE : PlayerColor.RED;
         history = result;
 
         turnIndex = history.size() - 1;
-        currentPlayer = PlayerColor.values()[turnIndex % 2];
+        currentPlayer = PlayerColor.values()[(this.startPlayer.ordinal() +turnIndex) % 2];
 
     }
 
-    public String StringToSave(String Savetext){
-        // TODO: 读取存档
-        return "";
-    }
 
     public String SavetoString(){
         StringBuilder result = new StringBuilder();
         //result.append(currentPlayer.toString()).append("\n");
+        result.append(startPlayer).append("\n");
         for (Cell[][] time_slice: history){
             for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
                 for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {

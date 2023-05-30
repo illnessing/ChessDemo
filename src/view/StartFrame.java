@@ -190,6 +190,8 @@ public class StartFrame extends JFrame {
 					JOptionPane.showMessageDialog(this, "Wrong Format!!");
 				} catch (WrongChessBoardSizeException ex) {
 					JOptionPane.showMessageDialog(this, "Wrong Chess Board Size!");
+				} catch (WrongPlayerException ex) {
+					throw new RuntimeException(ex);
 				}
 			}
 
