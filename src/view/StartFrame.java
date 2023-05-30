@@ -29,12 +29,11 @@ public class StartFrame extends JFrame {
 	private final Set<ChessboardPoint> trapCell = new HashSet<>();
 	private final Set<ChessboardPoint> blueDenCell = new HashSet<>();
 	private final Set<ChessboardPoint> redDenCell = new HashSet<>();
-
 	private final int ONE_CHESS_SIZE;
 	private ChessboardComponent chessboardComponent;
-
 	public static JLabel statusLabel = new JLabel();
-	private String audio;
+	private static Thread playThread;
+
 
 
 	public StartFrame(int width, int height) {
@@ -55,6 +54,7 @@ public class StartFrame extends JFrame {
 		addExitButton();
 		addLoadButton();
 		Play();
+
 
 	}
 
@@ -79,6 +79,8 @@ public class StartFrame extends JFrame {
 
 	private void addStartButton() {
 
+
+
 		JButton button = new JButton("New Game");
 		button.setLocation(50, HEIGTH / 10 + 120);
 		button.setSize(200, 60);
@@ -87,6 +89,9 @@ public class StartFrame extends JFrame {
 
 		button.addActionListener(e -> {
 			SwingUtilities.invokeLater(() -> {
+
+				over();
+				PlayButton();
 
 				ChessGameFrame mainFrame = new ChessGameFrame(1100, 810);
 				GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
@@ -148,6 +153,9 @@ public class StartFrame extends JFrame {
 
 		button.addActionListener(e -> {
 
+			over();
+			PlayButton();
+
 			SwingUtilities.invokeLater(() -> {
 				ChessGameFrame mainFrame = new ChessGameFrame(1100, 810);
 				GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
@@ -170,7 +178,7 @@ public class StartFrame extends JFrame {
 
 			FileSystemView fsv = FileSystemView.getFileSystemView();
 			JFileChooser fileChooser = new JFileChooser();
-			fileChooser.setCurrentDirectory(fsv.createFileObject("./resource"));
+			fileChooser.setCurrentDirectory(fsv.createFileObject("./resource/saves"));
 			fileChooser.setDialogTitle("请选择要上传的文件...");
 			fileChooser.setApproveButtonText("确定");
 			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -214,16 +222,28 @@ public class StartFrame extends JFrame {
 		add(button);
 
 		button.addActionListener(e -> {
+			PlayButton();
 			System.exit(0);
+			PlayButton();
 		});
 
 	}
 	private static void PlayAudio(String audio) {
-		new Thread(new PlayRunnable(audio)).start();
+		playThread = new Thread(new PlayRunnable(audio));
+		playThread.start();
 	}
 
 	public void Play() {
 		String audio = "./resource/music/menu1.mp3";
 		PlayAudio(audio);
 	}
+	public void over() {
+		playThread.stop();
+	}
+
+	public void PlayButton() {
+		String audio = "./resource/music/open.mp3";
+		PlayAudio(audio);
+	}
+
 }
