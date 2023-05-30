@@ -211,6 +211,38 @@ public class ChessboardComponent extends JComponent {
 		}
 //		若没有胜者
 	}
+	public void paintChessboard(){
+		for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
+			for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
+				ChessboardPoint temp = new ChessboardPoint(i, j);
+					if (riverCell.contains(temp)) {
+						Graphics graphics = gridComponents[i][j].getGraphics();
+						Image image = null;
+						try {
+							image = ImageIO.read(new File("./resource/image/BackGround.png"));
+						} catch (IOException e) {
+							throw new RuntimeException(e);
+						}
+						graphics.drawImage(image, 6, 6, getWidth()-12, getHeight()-12, null);
+					} else if (trapCell.contains(temp)) {
+						Graphics graphics = gridComponents[i][j].getGraphics();
+						graphics.setColor(Color.WHITE);
+						graphics.drawRect(gap, gap, 66, 66);
+						graphics.dispose();
+					} else if (blueDenCell.contains(temp) || redDenCell.contains(temp)) {
+						Graphics graphics = gridComponents[i][j].getGraphics();
+						graphics.setColor(Color.YELLOW);
+						graphics.drawRect(gap, gap, 66, 66);
+						graphics.dispose();
+					} else {
+						Graphics graphics = gridComponents[i][j].getGraphics();
+						graphics.setColor(Color.LIGHT_GRAY);
+						graphics.drawRect(gap, gap, 66, 66);
+						graphics.dispose();
+					}
+			}
+		}
+	}
 
 	@Override
 	protected void processMouseEvent(MouseEvent e) {

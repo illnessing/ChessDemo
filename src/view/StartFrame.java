@@ -97,6 +97,7 @@ public class StartFrame extends JFrame {
 				GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
 				chessboardComponent = mainFrame.getChessboardComponent();
 
+
 				//1.把图片添加到标签里（把标签的大小设为和图片大小相同），把标签放在分层面板的最底层；
 				ImageIcon bg = new ImageIcon("./resource/image/2.png");
 				JLabel label = new JLabel(bg);
@@ -111,32 +112,7 @@ public class StartFrame extends JFrame {
 				mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				mainFrame.setVisible(true);
 
-//				CellComponent[][] gridComponents = chessboardComponent.getGridComponents();
-//
-//				for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
-//					for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
-//						ChessboardPoint temp = new ChessboardPoint(i, j);
-//						if (riverCell.contains(temp)) {
-//
-//						} else if (trapCell.contains(temp)) {
-//
-//						} else if (blueDenCell.contains(temp) || redDenCell.contains(temp)) {
-//
-//						} else {
-//
-//					Graphics graphics = gridComponents[i][j].getGraphics();
-//					Image image = null;
-//					try {
-//						image = ImageIO.read(new File("./resource/image/BackGround.png"));
-//					} catch (IOException h) {
-//						throw new RuntimeException(h);
-//					}
-//					graphics.drawImage(image, 0, 0, getWidth(), getHeight(), null);
-//
-//						}
-//					}
-//				}
-
+				chessboardComponent.paintChessboard();
 
 			});
 			this.dispose();
