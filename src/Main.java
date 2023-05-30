@@ -22,6 +22,8 @@ public class Main {
             startFrame.setLocationRelativeTo(null);
             startFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             startFrame.setVisible(true);
+            startFrame.Play("./resource/music/menu1.mp3");
+
         });
     }
 }
