@@ -19,6 +19,7 @@ public class SaveFrame extends JFrame {
 	private final int ONE_CHESS_SIZE;
 	public static JLabel statusLabel = new JLabel();
 	private final ChessboardComponent chessboardComponent;
+	private static Thread playThread;
 	JTextField textField = new JTextField(); // 创建一个单行输入框
 
 
@@ -48,6 +49,7 @@ public class SaveFrame extends JFrame {
 		add(button);
 		button.addActionListener(e -> {
 			onButtonOk();
+			PlayButton();
 		});
 //		提示的文字
 		statusLabel = new JLabel("Input a name");
@@ -64,6 +66,7 @@ public class SaveFrame extends JFrame {
 
 	}
 	private void onButtonOk(){
+
 		String name = textField.getText();
 //		创建文件
 		String filePath = "./resource/"+name+".txt";
@@ -88,6 +91,7 @@ public class SaveFrame extends JFrame {
 		button.setFont(new Font("Rockwell", Font.BOLD, 20));
 		add(button);
 		button.addActionListener(e -> {
+			PlayButton();
 			FileSystemView fsv = FileSystemView.getFileSystemView();
 
 			JFileChooser fileChooser = new JFileChooser();
@@ -112,6 +116,7 @@ public class SaveFrame extends JFrame {
 	}
 
 	private void addExitButton() {
+
 		JButton button = new JButton("Back");
 		button.setLocation(50,  10 + 480);
 		button.setSize(300, 60);
@@ -119,8 +124,16 @@ public class SaveFrame extends JFrame {
 //		button.setContentAreaFilled(false);
 		add(button);
 		button.addActionListener(e -> {
+			PlayButton();
 			this.dispose();
 		});
-
+	}
+	private static void PlayAudio(String audio) {
+		playThread = new Thread(new PlayRunnable(audio));
+		playThread.start();
+	}
+	public void PlayButton() {
+		String audio = "./resource/music/open.mp3";
+		PlayAudio(audio);
 	}
 }

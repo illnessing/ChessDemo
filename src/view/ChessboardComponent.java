@@ -31,6 +31,7 @@ public class ChessboardComponent extends JComponent {
 	private final Set<ChessboardPoint> redDenCell = new HashSet<>();
 	boolean[][] flag = new boolean[CHESSBOARD_ROW_SIZE.getNum()][CHESSBOARD_COL_SIZE.getNum()];
 	protected GameController gameController;
+	private static Thread playThread;
 	int gap = 4;
 
 	public ChessboardComponent(int chessSize) {
@@ -219,6 +220,7 @@ public class ChessboardComponent extends JComponent {
 
 //		若鼠标点击（按下）
 		if (e.getID() == MouseEvent.MOUSE_PRESSED) {
+			PlayMove();
 			JComponent clickedComponent = (JComponent) getComponentAt(e.getX(), e.getY());
 //			int x = onlyGetChessboardPoint(e.getPoint()).getRow();
 //			int y = onlyGetChessboardPoint(e.getPoint()).getCol();
@@ -352,5 +354,13 @@ public class ChessboardComponent extends JComponent {
 			graphics.drawRect(gap, gap, 66, 66);
 			graphics.dispose();
 		}
+	}
+	private static void PlayAudio(String audio) {
+		playThread = new Thread(new PlayRunnable(audio));
+		playThread.start();
+	}
+	public void PlayMove() {
+		String audio = "./resource/music/step1.mp3";
+		PlayAudio(audio);
 	}
 }

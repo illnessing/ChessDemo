@@ -22,6 +22,7 @@ public class ChessGameFrame extends JFrame {
 
     private ChessboardComponent chessboardComponent;
     public static JLabel statusLabel = new JLabel();
+    private static Thread playThread;
 
 
     public ChessGameFrame(int width, int height) {
@@ -43,6 +44,7 @@ public class ChessGameFrame extends JFrame {
         addRestartButton();
         addLoadButton();
         addSaveButton();
+        Play();
     }
 
     public ChessboardComponent getChessboardComponent() {
@@ -86,6 +88,7 @@ public class ChessGameFrame extends JFrame {
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
         button.addActionListener(e -> {
+            PlayButton();
             chessboardComponent.gameController.LoadLastStep();
             PlayerColor playerColor = chessboardComponent.gameController.getCurrentPlayer();
             ChessGameFrame.statusLabel.setText("Player: "+playerColor.toString()+"  Turn: "+
@@ -99,6 +102,7 @@ public class ChessGameFrame extends JFrame {
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
         button.addActionListener(e -> {
+            PlayButton();
             chessboardComponent.gameController.LoadNextStep();
             PlayerColor playerColor = chessboardComponent.gameController.getCurrentPlayer();
             ChessGameFrame.statusLabel.setText("Player: "+playerColor.toString()+"  Turn: "+
@@ -115,10 +119,11 @@ public class ChessGameFrame extends JFrame {
         add(button);
 
         button.addActionListener(e -> {
+            PlayButton();
             FileSystemView fsv = FileSystemView.getFileSystemView();
 
             JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setCurrentDirectory(fsv.createFileObject("./resource"));
+            fileChooser.setCurrentDirectory(fsv.createFileObject("./resource/saves"));
             fileChooser.setDialogTitle("请选择要上传的文件...");
             fileChooser.setApproveButtonText("确定");
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -158,6 +163,7 @@ public class ChessGameFrame extends JFrame {
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
         button.addActionListener(e -> {
+            PlayButton();
             SaveFrame saveFrame = new SaveFrame(400, 700,chessboardComponent);
             saveFrame.setVisible(true);
 
@@ -171,10 +177,26 @@ public class ChessGameFrame extends JFrame {
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
         button.addActionListener(e -> {
+            PlayButton();
             chessboardComponent.gameController.ReStart();
             PlayerColor playerColor = chessboardComponent.gameController.getCurrentPlayer();
             ChessGameFrame.statusLabel.setText("Player: "+playerColor.toString()+"  Turn: "+ 0);
         });
 
+    }
+    private static void PlayAudio(String audio) {
+        playThread = new Thread(new PlayRunnable(audio));
+        playThread.start();
+    }
+    public void Play() {
+        String audio = "./resource/music/an_ordinary_day.mp3";
+        PlayAudio(audio);
+    }
+    public void over() {
+        playThread.stop();
+    }
+    public void PlayButton() {
+        String audio = "./resource/music/open.mp3";
+        PlayAudio(audio);
     }
 }
