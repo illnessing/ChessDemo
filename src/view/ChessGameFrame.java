@@ -148,7 +148,7 @@ public class ChessGameFrame extends JFrame {
                 } catch (WrongChessBoardSizeException ex) {
                     JOptionPane.showMessageDialog(this, "Error 102: Wrong Chess Board Size!");
                 } catch (WrongPlayerException ex) {
-                    JOptionPane.showMessageDialog(this, "Wrong Player!");
+                    JOptionPane.showMessageDialog(this, "Error 104: Wrong Player!");
                 }
             }
         });
