@@ -194,7 +194,7 @@ public class GameController implements GameListener {
         turnIndex += 1;
 
         try{
-            Save("./resource/auto_save.txt");
+            Save("./resource/saves/auto_save.txt");
         } catch (IOException e) {
             System.out.println("自动存档失败 ");
         }
