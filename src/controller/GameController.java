@@ -141,6 +141,7 @@ public class GameController implements GameListener {
                 }
             }
         }
+        winID = 0;
         return false;
     }
 
