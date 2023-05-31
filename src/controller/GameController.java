@@ -187,7 +187,7 @@ public class GameController implements GameListener {
         view.repaint();
 
         // 若悔棋之后再动，则遗忘未来的步数
-        if (turnIndex == history.size() - 1)
+        if (turnIndex < history.size() - 1)
             while (history.size() - 1 > turnIndex) history.remove(history.size() - 1);
 
         history.add(model.getClonedGrid());
