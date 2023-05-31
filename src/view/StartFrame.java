@@ -112,7 +112,7 @@ public class StartFrame extends JFrame {
 				mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				mainFrame.setVisible(true);
 
-				chessboardComponent.paintChessboard();
+//				chessboardComponent.paintChessboard();
 
 			});
 			this.dispose();
