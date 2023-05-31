@@ -140,7 +140,7 @@ public class ChessGameFrame extends JFrame {
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 } catch (WrongChessException ex) {
-                    JOptionPane.showMessageDialog(this, "Save Broken!");
+                    JOptionPane.showMessageDialog(this, "Error 103: Save Broken!");
                 } catch (NoFileThereException ex) {
                     JOptionPane.showMessageDialog(this, "No File There!");
                 } catch (WrongFormatException ex) {
