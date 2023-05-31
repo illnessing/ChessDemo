@@ -144,11 +144,11 @@ public class ChessGameFrame extends JFrame {
                 } catch (NoFileThereException ex) {
                     JOptionPane.showMessageDialog(this, "No File There!");
                 } catch (WrongFormatException ex) {
-                    JOptionPane.showMessageDialog(this, "Wrong Format!!");
+                    JOptionPane.showMessageDialog(this, "Error 101: Wrong Format!");
                 } catch (WrongChessBoardSizeException ex) {
-                    JOptionPane.showMessageDialog(this, "Wrong Chess Board Size!");
+                    JOptionPane.showMessageDialog(this, "Error 102: Wrong Chess Board Size!");
                 } catch (WrongPlayerException ex) {
-                    throw new RuntimeException(ex);
+                    JOptionPane.showMessageDialog(this, "Wrong Player!");
                 }
             }
         });

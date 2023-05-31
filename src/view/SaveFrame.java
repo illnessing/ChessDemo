@@ -69,7 +69,7 @@ public class SaveFrame extends JFrame {
 
 		String name = textField.getText();
 //		创建文件
-		String filePath = "./resource/"+name+".txt";
+		String filePath = "./resource/saves/"+name+".txt";
 		File file = new File(filePath);
 		try {
 			file.createNewFile();
@@ -78,7 +78,7 @@ public class SaveFrame extends JFrame {
 			e.printStackTrace();
 		}
 		try {
-			chessboardComponent.gameController.Save("./resource/"+name+".txt");
+			chessboardComponent.gameController.Save("./resource/saves/"+name+".txt");
 		} catch (IOException ex) {
 			throw new RuntimeException(ex);
 		}
@@ -95,7 +95,7 @@ public class SaveFrame extends JFrame {
 			FileSystemView fsv = FileSystemView.getFileSystemView();
 
 			JFileChooser fileChooser = new JFileChooser();
-			fileChooser.setCurrentDirectory(fsv.createFileObject("./resource"));
+			fileChooser.setCurrentDirectory(fsv.createFileObject("./resource/saves"));
 			fileChooser.setDialogTitle("请选择要上传的文件...");
 			fileChooser.setApproveButtonText("确定");
 			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
