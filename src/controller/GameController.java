@@ -331,6 +331,9 @@ public class GameController implements GameListener {
         turnIndex = history.size() - 1;
         currentPlayer = PlayerColor.values()[(this.startPlayer.ordinal() +turnIndex) % 2];
 
+        winID = 0;
+        win();
+
     }
 
 
