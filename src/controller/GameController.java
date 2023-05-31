@@ -276,10 +276,11 @@ public class GameController implements GameListener {
         try{
             String t = input.next();
             if (!Objects.equals(t, "A") && !Objects.equals(t, "B")) throw new WrongPlayerException();
+            input.nextLine();
         } catch (Exception e) {
             throw new WrongPlayerException();
         }
-        input.nextLine();
+
         int m = 0;
         while (input.hasNext()){
             int n = input.nextLine().length();
