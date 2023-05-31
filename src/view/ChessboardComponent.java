@@ -375,7 +375,7 @@ public class ChessboardComponent extends JComponent {
 		if (lastSrc != null){
 			Graphics graphics = gridComponents[lastSrc.getRow()][lastSrc.getCol()].getGraphics();
 			graphics.setColor(Color.GREEN);
-			graphics.fillRect(gap, gap, 66, 66);
+			graphics.fillRect(gap+2, gap+2, 62, 62);
 			graphics.dispose();
 		}
 
@@ -383,7 +383,7 @@ public class ChessboardComponent extends JComponent {
 		if (lastDest != null){
 			Graphics graphics = gridComponents[lastDest.getRow()][lastDest.getCol()].getGraphics();
 			graphics.setColor(Color.ORANGE);
-			graphics.drawRect(gap, gap, 66, 66);
+			graphics.drawRect(gap+2, gap+2, 62, 62);
 			graphics.dispose();
 		}
 	}
